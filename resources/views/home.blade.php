@@ -44,11 +44,7 @@
     <link rel="stylesheet" href="{{ asset('css/retro.css') }}">
     
     <style>
-        .hero-title {
-            text-shadow: 0 0 15px rgba(0, 240, 255, 0.4), 0 0 30px rgba(157, 78, 221, 0.3);
-        }
         .cabinet-glow:hover {
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.25);
             border-color: #00f0ff;
         }
     </style>
@@ -56,13 +52,13 @@
 <body class="dashboard-body font-sans antialiased flex flex-col min-h-screen">
 
     <!-- Top Neon Bar -->
-    <div class="h-1.5 w-full bg-gradient-to-r from-retro-cyan via-retro-purple to-retro-magenta shadow-[0_0_15px_rgba(255,0,127,0.5)]"></div>
+    <div class="h-1 w-full bg-retro-cyan"></div>
 
     <!-- Navigation Header -->
     <nav class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 border-b border-retro-border border-opacity-40 flex justify-between items-center">
         <div class="flex items-center space-x-3">
-            <div class="p-2 bg-retro-card rounded-lg border border-retro-cyan shadow-[0_0_10px_rgba(0,240,255,0.2)]">
-                <i class="fa-solid fa-gamepad text-xl text-retro-cyan animate-pulse"></i>
+            <div class="p-2 bg-retro-card rounded-lg border border-retro-cyan">
+                <i class="fa-solid fa-gamepad text-xl text-retro-cyan"></i>
             </div>
             <div>
                 <span class="font-arcade text-xl font-black uppercase tracking-wider text-white">Retro Drives</span>
@@ -110,7 +106,7 @@
         
         <!-- Hero Section -->
         <section class="text-center max-w-3xl mx-auto mb-16">
-            <h1 class="font-arcade text-5xl md:text-7xl font-black tracking-wider uppercase text-transparent bg-clip-text bg-gradient-to-r from-retro-cyan via-retro-purple to-retro-magenta hero-title mb-4 animate-pulse">
+            <h1 class="font-arcade text-5xl md:text-7xl font-black tracking-wider uppercase text-retro-cyan mb-4">
                 Retro Drives
             </h1>
             <p class="font-arcade text-lg md:text-xl text-retro-cyan uppercase tracking-widest mb-6">
@@ -120,7 +116,7 @@
                 Welcome to the ultimate arcade cabinet archive. Explore, search, and inspect vintage ROM hardware configurations across thousands of classic games from our <span class="text-retro-cyan font-semibold">MAME</span> and <span class="text-retro-magenta font-semibold">FBNeo</span> catalogs.
             </p>
             <div class="flex justify-center space-x-4">
-                <a href="{{ route('admin.dashboard') }}" class="px-6 py-3.5 bg-gradient-to-r from-retro-cyan via-retro-purple to-retro-magenta hover:brightness-110 text-white font-arcade text-xs uppercase tracking-wider rounded-xl transition shadow-[0_0_20px_rgba(0,240,255,0.3)]">
+                <a href="{{ route('admin.dashboard') }}" class="px-6 py-3.5 bg-retro-cyan hover:bg-opacity-85 text-black font-arcade text-xs uppercase tracking-wider rounded-xl transition">
                     Explore Database
                 </a>
             </div>

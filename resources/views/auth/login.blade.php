@@ -42,17 +42,17 @@
 <body class="login-body font-sans antialiased min-h-screen flex items-center justify-center p-4">
 
     <!-- Top Neon Bar -->
-    <div class="fixed top-0 left-0 w-full h-1.5 bg-gradient-to-r from-retro-cyan via-retro-purple to-retro-magenta shadow-[0_0_15px_rgba(255,0,127,0.5)]"></div>
+    <div class="fixed top-0 left-0 w-full h-1 bg-retro-cyan"></div>
 
     <div class="max-w-md w-full">
         <!-- Logo Header -->
         <div class="text-center mb-8">
-            <div class="inline-block p-4 bg-retro-card rounded-2xl border border-retro-magenta shadow-[0_0_15px_rgba(255,0,127,0.25)] mb-3 animate-pulse">
+            <div class="inline-block p-4 bg-retro-card rounded-2xl border border-retro-magenta mb-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-retro-magenta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
             </div>
-            <h1 class="font-arcade text-3xl font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-retro-cyan via-retro-purple to-retro-magenta neon-text-magenta mb-1">
+            <h1 class="font-arcade text-3xl font-black uppercase tracking-wider text-retro-cyan mb-1">
                 Retro Drives
             </h1>
             <p class="font-tech text-xs text-retro-cyan tracking-widest uppercase">Games you want to play</p>
@@ -105,7 +105,7 @@
 
                 <!-- Submit Button -->
                 <div>
-                    <button type="submit" class="w-full py-3 bg-gradient-to-r from-retro-cyan via-retro-purple to-retro-magenta hover:brightness-110 rounded-lg text-white font-arcade text-sm uppercase tracking-wider transition shadow-[0_0_15px_rgba(255,0,127,0.3)]">
+                    <button type="submit" class="w-full py-3 bg-retro-cyan hover:bg-opacity-85 rounded-lg text-black font-arcade text-sm uppercase tracking-wider transition">
                         Request Access
                     </button>
                 </div>

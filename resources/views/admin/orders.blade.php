@@ -48,18 +48,18 @@
 <body class="dashboard-body font-sans antialiased">
 
     <!-- Top Neon Bar -->
-    <div class="h-1.5 w-full bg-gradient-to-r from-retro-cyan via-retro-purple to-retro-magenta shadow-[0_0_15px_rgba(255,0,127,0.5)]"></div>
+    <div class="h-1 w-full bg-retro-cyan"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         
         <!-- Header -->
         <header class="flex flex-col md:flex-row justify-between items-center mb-8 pb-6 border-b border-retro-border border-opacity-40">
             <div class="flex items-center space-x-4 mb-4 md:mb-0">
-                <div class="p-3 bg-retro-card rounded-lg border border-retro-magenta shadow-[0_0_10px_rgba(255,0,127,0.2)]">
-                    <i class="fa-solid fa-truck-ramp-box text-2xl text-retro-magenta animate-pulse"></i>
+                <div class="p-3 bg-retro-card rounded-lg border border-retro-magenta">
+                    <i class="fa-solid fa-truck-ramp-box text-2xl text-retro-magenta"></i>
                 </div>
                 <div>
-                    <h1 class="font-arcade text-3xl font-extrabold uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-retro-cyan to-retro-magenta neon-text-magenta">
+                    <h1 class="font-arcade text-3xl font-extrabold uppercase tracking-wider text-retro-cyan">
                         Retro Drives
                     </h1>
                     <p class="font-tech text-xs text-retro-cyan tracking-widest uppercase">Order Processing Backend</p>
@@ -272,7 +272,7 @@
                             <option value="Shipped">Shipped</option>
                             <option value="Cancelled">Cancelled</option>
                         </select>
-                        <button type="submit" class="px-4 py-1.5 bg-gradient-to-r from-retro-cyan to-retro-purple hover:brightness-125 text-white font-tech text-xs uppercase tracking-wider rounded-lg transition shadow-md">
+                        <button type="submit" class="px-4 py-1.5 bg-retro-cyan hover:bg-opacity-85 text-black font-tech text-xs uppercase tracking-wider rounded-lg transition">
                             Update
                         </button>
                     </form>

@@ -43,17 +43,17 @@
 <body class="login-body font-sans antialiased min-h-screen flex items-center justify-center p-4">
 
     <!-- Top Neon Bar -->
-    <div class="fixed top-0 left-0 w-full h-1.5 bg-gradient-to-r from-retro-cyan via-retro-purple to-retro-magenta shadow-[0_0_15px_rgba(255,0,127,0.5)]"></div>
+    <div class="fixed top-0 left-0 w-full h-1 bg-retro-cyan"></div>
 
     <div class="max-w-md w-full">
         <!-- Logo Header -->
         <div class="text-center mb-8">
-            <div class="inline-block p-4 bg-retro-card rounded-2xl border border-retro-cyan shadow-[0_0_15px_rgba(0,240,255,0.25)] mb-3 animate-pulse">
+            <div class="inline-block p-4 bg-retro-card rounded-2xl border border-retro-cyan mb-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-retro-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                 </svg>
             </div>
-            <h1 class="font-arcade text-3xl font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-retro-cyan via-retro-purple to-retro-magenta neon-text-magenta mb-1">
+            <h1 class="font-arcade text-3xl font-black uppercase tracking-wider text-retro-cyan mb-1">
                 Retro Drives
             </h1>
             <p class="font-tech text-xs text-retro-cyan tracking-widest uppercase">Games you want to play</p>
@@ -110,7 +110,7 @@
 
                 <!-- Register Button -->
                 <div class="pt-2">
-                    <button type="submit" class="w-full py-3 bg-gradient-to-r from-retro-cyan via-retro-purple to-retro-magenta hover:brightness-110 text-white font-arcade text-sm uppercase tracking-wider transition shadow-[0_0_15px_rgba(0,240,255,0.3)]">
+                    <button type="submit" class="w-full py-3 bg-retro-cyan hover:bg-opacity-85 rounded-lg text-black font-arcade text-sm uppercase tracking-wider transition">
                         Register Account
                     </button>
                 </div>

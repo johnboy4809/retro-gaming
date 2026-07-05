@@ -46,13 +46,13 @@
 <body class="dashboard-body font-sans antialiased flex flex-col min-h-screen">
 
     <!-- Top Neon Bar -->
-    <div class="h-1.5 w-full bg-gradient-to-r from-retro-cyan via-retro-purple to-retro-magenta shadow-[0_0_15px_rgba(255,0,127,0.5)]"></div>
+    <div class="h-1 w-full bg-retro-cyan"></div>
 
     <!-- Navigation Header -->
     <nav class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 border-b border-retro-border border-opacity-40 flex justify-between items-center">
         <a href="{{ url('/') }}" class="flex items-center space-x-3 hover:opacity-85 transition">
-            <div class="p-2 bg-retro-card rounded-lg border border-retro-cyan shadow-[0_0_10px_rgba(0,240,255,0.2)]">
-                <i class="fa-solid fa-gamepad text-xl text-retro-cyan animate-pulse"></i>
+            <div class="p-2 bg-retro-card rounded-lg border border-retro-cyan">
+                <i class="fa-solid fa-gamepad text-xl text-retro-cyan"></i>
             </div>
             <div>
                 <span class="font-arcade text-xl font-black uppercase tracking-wider text-white">Retro Drives</span>
@@ -202,7 +202,7 @@
 
                             <!-- Submit button -->
                             <div class="pt-4">
-                                <button type="submit" class="w-full py-3 bg-gradient-to-r from-retro-cyan via-retro-purple to-retro-magenta hover:brightness-110 text-white font-arcade text-xs uppercase tracking-wider transition shadow-[0_0_15px_rgba(0,240,255,0.3)]">
+                                <button type="submit" class="w-full py-3 bg-retro-cyan hover:bg-opacity-85 text-black font-arcade text-xs uppercase tracking-wider transition">
                                     Place Order Request
                                 </button>
                             </div>
