@@ -47,14 +47,14 @@
 <body class="dashboard-body font-sans antialiased">
 
     <!-- Top Neon Bar -->
-    <div class="h-1 w-full bg-retro-cyan shadow-[0_0_10px_rgba(0,240,255,0.4)]"></div>
+    <div class="h-1 w-full bg-retro-cyan"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
         <!-- Header -->
         <header class="flex flex-col md:flex-row justify-between items-center mb-8 pb-6 border-b border-retro-border border-opacity-40">
             <div class="flex items-center space-x-4 mb-4 md:mb-0">
-                <div class="p-3 bg-retro-card rounded-lg border border-retro-cyan shadow-[0_0_10px_rgba(0,240,255,0.2)]">
+                <div class="p-3 bg-retro-card rounded-lg border border-retro-cyan">
                     <i class="fa-solid fa-tv text-2xl text-retro-cyan"></i>
                 </div>
                 <div>
@@ -90,7 +90,7 @@
             <a href="{{ url('/admin?group=arcade&system=mame') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all bg-retro-card text-gray-400 hover:text-white border border-retro-border">
                 <i class="fa-solid fa-gamepad mr-1"></i> Arcade
             </a>
-            <a href="{{ route('admin.console') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all bg-retro-cyan text-black shadow-[0_0_10px_rgba(0,240,255,0.2)]">
+            <a href="{{ route('admin.console') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all bg-retro-cyan text-black">
                 <i class="fa-solid fa-tv mr-1"></i> Console
             </a>
             <a href="{{ url('/admin?group=home_computer') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all bg-retro-card text-gray-400 hover:text-white border border-retro-border">

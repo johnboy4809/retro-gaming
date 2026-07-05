@@ -47,15 +47,15 @@
 <body class="dashboard-body font-sans antialiased">
 
     <!-- Top Neon Bar -->
-    <div class="h-1 w-full bg-retro-cyan shadow-[0_0_10px_rgba(0,240,255,0.4)]"></div>
+    <div class="h-1 w-full bg-retro-cyan"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         
         <!-- Header -->
         <header class="flex flex-col md:flex-row justify-between items-center mb-8 pb-6 border-b border-retro-border border-opacity-40">
             <div class="flex items-center space-x-4 mb-4 md:mb-0">
-                <div class="p-3 bg-retro-card rounded-lg border border-retro-cyan shadow-[0_0_10px_rgba(0,240,255,0.2)]">
-                    <i class="fa-solid fa-gamepad text-2xl text-retro-cyan animate-pulse"></i>
+                <div class="p-3 bg-retro-card rounded-lg border border-retro-cyan">
+                    <i class="fa-solid fa-gamepad text-2xl text-retro-cyan"></i>
                 </div>
                 <div>
                     <h1 class="font-arcade text-3xl font-extrabold uppercase tracking-wider text-retro-cyan">
@@ -96,13 +96,13 @@
 
         <!-- Top Level Device Groups -->
         <div class="flex items-center space-x-2 mb-4 border-b border-retro-border border-opacity-20 pb-4">
-            <a href="{{ url('/admin?group=arcade&system=mame') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all {{ $group === 'arcade' ? 'bg-retro-cyan text-black shadow-[0_0_10px_rgba(0,240,255,0.2)]' : 'bg-retro-card text-gray-400 hover:text-white border border-retro-border' }}">
+            <a href="{{ url('/admin?group=arcade&system=mame') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all {{ $group === 'arcade' ? 'bg-retro-cyan text-black' : 'bg-retro-card text-gray-400 hover:text-white border border-retro-border' }}">
                 <i class="fa-solid fa-gamepad mr-1"></i> Arcade
             </a>
-            <a href="{{ route('admin.console') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all {{ $group === 'console' ? 'bg-retro-cyan text-black shadow-[0_0_10px_rgba(0,240,255,0.2)]' : 'bg-retro-card text-gray-400 hover:text-white border border-retro-border' }}">
+            <a href="{{ route('admin.console') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all {{ $group === 'console' ? 'bg-retro-cyan text-black' : 'bg-retro-card text-gray-400 hover:text-white border border-retro-border' }}">
                 <i class="fa-solid fa-tv mr-1"></i> Console
             </a>
-            <a href="{{ url('/admin?group=home_computer') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all {{ $group === 'home_computer' ? 'bg-retro-cyan text-black shadow-[0_0_10px_rgba(0,240,255,0.2)]' : 'bg-retro-card text-gray-400 hover:text-white border border-retro-border' }}">
+            <a href="{{ url('/admin?group=home_computer') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all {{ $group === 'home_computer' ? 'bg-retro-cyan text-black' : 'bg-retro-card text-gray-400 hover:text-white border border-retro-border' }}">
                 <i class="fa-solid fa-computer mr-1"></i> Home Computer
             </a>
             <a href="{{ route('admin.orders') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all bg-retro-card text-gray-400 hover:text-white border border-retro-border">
@@ -123,12 +123,12 @@
         @endif
 
         @if(session('success'))
-            <div class="mb-6 p-4 bg-retro-green bg-opacity-15 border border-retro-green rounded-xl text-retro-green font-tech text-sm flex items-center justify-between shadow-[0_0_15px_rgba(57,255,20,0.1)]">
+            <div class="mb-6 p-4 bg-retro-green bg-opacity-15 border border-retro-green rounded-xl text-retro-green font-tech text-sm flex items-center justify-between">
                 <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-circle-check animate-pulse"></i>
+                    <i class="fa-solid fa-circle-check"></i>
                     <span>{{ session('success') }}</span>
                 </div>
-                <button onclick="this.parentElement.remove()" class="text-retro-green hover:brightness-125">
+                <button onclick="this.parentElement.remove()" class="text-retro-green hover:opacity-70">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -288,7 +288,7 @@
 
                     <!-- Actions -->
                     <div class="flex items-end space-x-2">
-                        <button type="submit" class="flex-1 px-4 py-2 bg-retro-cyan hover:bg-opacity-85 rounded-lg text-black font-tech text-xs uppercase tracking-wider transition shadow-[0_0_10px_rgba(0,240,255,0.15)]">
+                        <button type="submit" class="flex-1 px-4 py-2 bg-retro-cyan hover:bg-opacity-85 rounded-lg text-black font-tech text-xs uppercase tracking-wider transition">
                             Apply
                         </button>
                         <a href="{{ url('/admin?system=' . request('system', 'mame')) }}" class="px-3 py-2 bg-retro-card hover:bg-opacity-80 rounded-lg border border-retro-border text-gray-400 hover:text-white text-xs transition flex items-center justify-center" title="Reset Filters">
@@ -400,7 +400,7 @@
 
     <!-- Inspector Modal (Interactive details panel) -->
     <div id="inspector-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="glass-card max-w-2xl w-full rounded-2xl border border-retro-cyan shadow-[0_0_30px_rgba(0,240,255,0.25)] overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div class="glass-card max-w-2xl w-full rounded-2xl border border-retro-cyan overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             <!-- Modal Header -->
             <div class="px-6 py-4 bg-retro-card border-b border-retro-border flex justify-between items-center">
                 <div>
@@ -478,7 +478,7 @@
 
             <!-- Modal Footer -->
             <div class="px-6 py-4 bg-retro-card border-t border-retro-border flex justify-end">
-                <button onclick="closeDetails()" class="px-5 py-2 bg-retro-cyan hover:bg-opacity-80 text-black font-tech text-sm uppercase tracking-wider rounded-lg transition shadow-[0_0_10px_rgba(0,240,255,0.2)]">
+                <button onclick="closeDetails()" class="px-5 py-2 bg-retro-cyan hover:bg-opacity-80 text-black font-tech text-sm uppercase tracking-wider rounded-lg transition">
                     Close Inspector
                 </button>
             </div>
@@ -487,7 +487,7 @@
 
     <!-- Edit Modal (Interactive form details panel) -->
     <div id="edit-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="glass-card max-w-2xl w-full rounded-2xl border border-retro-magenta shadow-[0_0_30px_rgba(255,0,127,0.25)] overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div class="glass-card max-w-2xl w-full rounded-2xl border border-retro-magenta overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             <form id="edit-form" action="" method="POST">
                 @csrf
                 @method('PUT')
@@ -550,7 +550,7 @@
                     <button type="button" onclick="closeEdit()" class="px-4 py-2 bg-retro-card border border-retro-border hover:border-white text-white font-tech text-sm uppercase tracking-wider rounded-lg transition">
                         Cancel
                     </button>
-                    <button type="submit" class="px-5 py-2 bg-retro-cyan hover:bg-opacity-85 text-black font-tech text-sm uppercase tracking-wider rounded-lg transition shadow-[0_0_10px_rgba(0,240,255,0.15)]">
+                    <button type="submit" class="px-5 py-2 bg-retro-cyan hover:bg-opacity-85 text-black font-tech text-sm uppercase tracking-wider rounded-lg transition">
                         Save Changes
                     </button>
                 </div>

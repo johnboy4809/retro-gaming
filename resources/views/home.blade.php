@@ -66,11 +66,11 @@
             </div>
         </div>
         <div class="flex items-center space-x-3">
-            <a href="{{ route('cart.index') }}" class="px-4 py-2 bg-retro-card border border-retro-border hover:border-retro-cyan text-gray-300 hover:text-white text-xs font-tech uppercase tracking-wider rounded-lg transition flex items-center space-x-1.5 shadow-[0_0_10px_rgba(0,240,255,0.1)] relative">
+            <a href="{{ route('cart.index') }}" class="px-4 py-2 bg-retro-card border border-retro-border hover:border-retro-cyan text-gray-300 hover:text-white text-xs font-tech uppercase tracking-wider rounded-lg transition flex items-center space-x-1.5 relative">
                 <i class="fa-solid fa-hard-drive text-retro-cyan"></i>
                 <span>Drive Builder</span>
                 @if(session()->has('cart') && count(session('cart')) > 0)
-                    <span class="absolute -top-2 -right-2 bg-retro-magenta text-white text-[9px] font-tech font-bold px-1.5 py-0.5 rounded-full shadow-[0_0_8px_rgba(255,0,127,0.6)]">
+                    <span class="absolute -top-2 -right-2 bg-retro-magenta text-white text-[9px] font-tech font-bold px-1.5 py-0.5 rounded-full">
                         {{ count(session('cart')) }}
                     </span>
                 @endif

@@ -78,12 +78,12 @@
         </div>
 
         @if(session('success'))
-            <div class="mb-6 p-4 bg-retro-green bg-opacity-15 border border-retro-green rounded-xl text-retro-green font-tech text-sm flex items-center justify-between shadow-[0_0_15px_rgba(57,255,20,0.1)]">
+            <div class="mb-6 p-4 bg-retro-green bg-opacity-15 border border-retro-green rounded-xl text-retro-green font-tech text-sm flex items-center justify-between">
                 <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-circle-check animate-pulse"></i>
+                    <i class="fa-solid fa-circle-check"></i>
                     <span>{{ session('success') }}</span>
                 </div>
-                <button onclick="this.parentElement.remove()" class="text-retro-green hover:brightness-125">
+                <button onclick="this.parentElement.remove()" class="text-retro-green hover:opacity-70">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>

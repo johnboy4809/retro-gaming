@@ -97,18 +97,18 @@
             <a href="{{ url('/admin?group=home_computer') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all bg-retro-card text-gray-400 hover:text-white border border-retro-border">
                 <i class="fa-solid fa-computer mr-1"></i> Home Computer
             </a>
-            <a href="{{ route('admin.orders') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all bg-gradient-to-r from-retro-cyan to-retro-purple text-white shadow-[0_0_15px_rgba(0,240,255,0.35)]">
+            <a href="{{ route('admin.orders') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all bg-retro-cyan text-black">
                 <i class="fa-solid fa-truck-ramp-box mr-1"></i> Customer Orders
             </a>
         </div>
 
         @if(session('success'))
-            <div class="mb-6 p-4 bg-retro-green bg-opacity-15 border border-retro-green rounded-xl text-retro-green font-tech text-sm flex items-center justify-between shadow-[0_0_15px_rgba(57,255,20,0.1)]">
+            <div class="mb-6 p-4 bg-retro-green bg-opacity-15 border border-retro-green rounded-xl text-retro-green font-tech text-sm flex items-center justify-between">
                 <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-circle-check animate-pulse"></i>
+                    <i class="fa-solid fa-circle-check"></i>
                     <span>{{ session('success') }}</span>
                 </div>
-                <button onclick="this.parentElement.remove()" class="text-retro-green hover:brightness-125">
+                <button onclick="this.parentElement.remove()" class="text-retro-green hover:opacity-70">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -213,7 +213,7 @@
 
     <!-- Order Inspector Modal -->
     <div id="order-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="glass-card max-w-2xl w-full rounded-2xl border border-retro-cyan shadow-[0_0_30px_rgba(0,240,255,0.25)] overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div class="glass-card max-w-2xl w-full rounded-2xl border border-retro-cyan overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             <!-- Modal Header -->
             <div class="px-6 py-4 bg-retro-card border-b border-retro-border flex justify-between items-center">
                 <div>
@@ -281,7 +281,7 @@
 
             <!-- Modal Footer -->
             <div class="px-6 py-4 bg-retro-card border-t border-retro-border flex justify-end">
-                <button onclick="closeOrderModal()" class="px-5 py-2 bg-retro-cyan hover:bg-opacity-80 text-black font-tech text-sm uppercase tracking-wider rounded-lg transition shadow-[0_0_10px_rgba(0,240,255,0.2)]">
+                <button onclick="closeOrderModal()" class="px-5 py-2 bg-retro-cyan hover:bg-opacity-80 text-black font-tech text-sm uppercase tracking-wider rounded-lg transition">
                     Close Inspector
                 </button>
             </div>
