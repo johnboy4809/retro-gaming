@@ -24,11 +24,9 @@ $retro-green: #39ff14;
     }
 }
 
-/* Custom glassmorphism details */
+/* Card containers */
 .glass-card {
-    background: rgba(18, 11, 45, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(18, 11, 45, 0.95);
 }
 
 /* Subtle border glows */
