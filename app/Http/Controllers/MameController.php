@@ -19,15 +19,48 @@ class MameController extends Controller
             $mames = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 20);
             $stats = ['total' => 0, 'bios' => 0, 'clones' => 0, 'chds' => 0];
             $hardwareBoards = collect([]);
-            return view('dashboard', compact('mames', 'stats', 'hardwareBoards', 'group', 'system'));
+            return view('admin.dashboard', compact('mames', 'stats', 'hardwareBoards', 'group', 'system'));
+        }
+
+        if ($system === 'chd') {
+            $query = \App\Models\Chd::query();
+
+            // Search
+            if ($request->filled('search')) {
+                $search = $request->input('search');
+                $query->where('rom', 'like', "%{$search}%");
+            }
+
+            // Sorting
+            $sortBy = $request->input('sort_by', 'rom');
+            $sortOrder = $request->input('sort_order', 'asc');
+            $allowedSorts = ['rom', 'size'];
+            if (in_array($sortBy, $allowedSorts)) {
+                $query->orderBy($sortBy, $sortOrder === 'desc' ? 'desc' : 'asc');
+            } else {
+                $query->orderBy('rom', 'asc');
+            }
+
+            $mames = $query->paginate(30)->withQueryString();
+
+            $stats = [
+                'total' => \App\Models\Chd::count(),
+                'bios' => 0,
+                'clones' => 0,
+                'chds' => \App\Models\Chd::count(),
+            ];
+
+            $hardwareBoards = collect([]);
+
+            return view('admin.dashboard', compact('mames', 'stats', 'hardwareBoards', 'group', 'system'));
         }
 
         if ($system === 'fbneo') {
             $query = Mame::whereIn('rom', function ($q) {
                 $q->select('rom')->from('fbneo');
-            })->with('arcadeBoard');
+            })->with(['arcadeBoard', 'chd']);
         } else {
-            $query = Mame::with('arcadeBoard');
+            $query = Mame::with(['arcadeBoard', 'chd']);
         }
 
         // Search
@@ -92,7 +125,7 @@ class MameController extends Controller
 
         $hardwareBoards = ArcadeBoard::orderBy('board')->get();
 
-        return view('dashboard', compact('mames', 'stats', 'hardwareBoards', 'group', 'system'));
+        return view('admin.dashboard', compact('mames', 'stats', 'hardwareBoards', 'group', 'system'));
     }
 
     public function update(Request $request, Mame $mame)
@@ -129,5 +162,73 @@ class MameController extends Controller
         $order->update($validated);
 
         return redirect()->back()->with('success', 'Order status updated successfully!');
+    }
+
+    public function store(Request $request)
+    {
+        $system = $request->input('system', 'mame');
+
+        if ($system === 'chd') {
+            $validated = $request->validate([
+                'rom' => 'required|string|max:100|unique:chd,rom',
+                'size' => 'required|numeric|min:0',
+            ]);
+
+            \App\Models\Chd::create($validated);
+
+            return redirect()->back()->with('success', 'CHD ROM added successfully!');
+        }
+
+        // For MAME and FBNeo
+        $validated = $request->validate([
+            'rom' => 'required|string|max:100|unique:mame,rom',
+            'full_name' => 'nullable|string|max:255',
+            'year' => 'nullable|string|max:20',
+            'manufacturer' => 'nullable|string|max:150',
+            'driver' => 'nullable|string|max:100',
+            'sourcefile' => 'nullable|string|max:100',
+            'size' => 'nullable|numeric|min:0',
+        ]);
+
+        $validated['use_bios'] = $request->boolean('use_bios');
+        $validated['use_chds'] = $request->boolean('use_chds');
+
+        $mame = Mame::create($validated);
+
+        if ($system === 'fbneo') {
+            \App\Models\Fbneo::create(['rom' => $validated['rom']]);
+            return redirect()->back()->with('success', 'FBNeo ROM added successfully!');
+        }
+
+        return redirect()->back()->with('success', 'MAME ROM added successfully!');
+    }
+
+    public function updateChd(Request $request, \App\Models\Chd $chd)
+    {
+        $validated = $request->validate([
+            'size' => 'required|numeric|min:0',
+        ]);
+
+        $chd->update($validated);
+
+        return redirect()->back()->with('success', 'CHD ROM updated successfully!');
+    }
+
+    public function destroy(Mame $mame)
+    {
+        $mame->delete();
+        return redirect()->back()->with('success', 'MAME ROM deleted successfully!');
+    }
+
+    public function destroyChd(\App\Models\Chd $chd)
+    {
+        $chd->delete();
+        return redirect()->back()->with('success', 'CHD ROM deleted successfully!');
+    }
+
+    public function destroyFbneo($rom)
+    {
+        \App\Models\Fbneo::where('rom', $rom)->delete();
+        return redirect()->back()->with('success', 'ROM removed from FBNeo catalog successfully!');
     }
 }

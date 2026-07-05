@@ -49,7 +49,7 @@
     <!-- Top Neon Bar -->
     <div class="h-1 w-full bg-retro-cyan"></div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="w-full max-w-none px-4 sm:px-8 lg:px-12 py-6">
         
         <!-- Header -->
         <header class="flex flex-col md:flex-row justify-between items-center mb-8 pb-6 border-b border-retro-border border-opacity-40">
@@ -119,6 +119,9 @@
                 <a href="{{ url('/admin?group=arcade&system=fbneo') }}" class="px-4 py-2 rounded-lg font-tech text-xs uppercase tracking-wider transition-all {{ $system === 'fbneo' ? 'bg-retro-bg border-b-2 border-retro-magenta text-white' : 'bg-retro-card text-gray-400 hover:text-white border border-retro-border' }}">
                     FBNeo Catalog
                 </a>
+                <a href="{{ url('/admin?group=arcade&system=chd') }}" class="px-4 py-2 rounded-lg font-tech text-xs uppercase tracking-wider transition-all {{ $system === 'chd' ? 'bg-retro-bg border-b-2 border-retro-magenta text-white' : 'bg-retro-card text-gray-400 hover:text-white border border-retro-border' }}">
+                    CHD Catalog
+                </a>
             </div>
         @endif
 
@@ -131,6 +134,25 @@
                 <button onclick="this.parentElement.remove()" class="text-retro-green hover:opacity-70">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="mb-6 p-4 bg-retro-red bg-opacity-15 border border-retro-red rounded-xl text-retro-red font-tech text-sm flex flex-col space-y-1">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span class="font-bold">Validation Errors Occurred:</span>
+                    </div>
+                    <button onclick="this.parentElement.remove()" class="text-retro-red hover:opacity-70">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <ul class="list-disc pl-5 text-xs">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
 
@@ -212,10 +234,16 @@
 
         <!-- Filters and Search -->
         <section class="glass-card p-6 rounded-xl border border-retro-border border-opacity-60 shadow-xl mb-8">
-            <h2 class="font-arcade text-lg font-bold text-white mb-4 flex items-center space-x-2">
-                <i class="fa-solid fa-sliders text-retro-cyan"></i>
-                <span>Filter Console & Search</span>
-            </h2>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2 pb-3 border-b border-retro-border border-opacity-20">
+                <h2 class="font-arcade text-lg font-bold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-sliders text-retro-cyan"></i>
+                    <span>Filter Catalog & Search</span>
+                </h2>
+                <button type="button" onclick="showAdd()" class="px-4 py-2 bg-retro-magenta hover:bg-opacity-85 text-black font-tech text-xs uppercase tracking-wider rounded-lg transition flex items-center space-x-1.5 font-bold">
+                    <i class="fa-solid fa-plus text-black"></i>
+                    <span>Add New Record</span>
+                </button>
+            </div>
             
             <form action="{{ url('/admin') }}" method="GET" class="space-y-4">
                 <input type="hidden" name="system" value="{{ request('system', 'mame') }}">
@@ -228,7 +256,7 @@
                                 <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
                             </span>
                             <input type="text" name="search" value="{{ request('search') }}" 
-                                   placeholder="Search ROM, full name, manufacturer, driver..." 
+                                   placeholder="{{ $system === 'chd' ? 'Search ROM name...' : 'Search ROM, full name, manufacturer, driver...' }}" 
                                    class="w-full pl-10 pr-4 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan focus:outline-none text-white text-sm placeholder-gray-500 font-sans transition">
                         </div>
                     </div>
@@ -238,11 +266,16 @@
                         <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Sort By</label>
                         <div class="grid grid-cols-2 gap-2">
                             <select name="sort_by" class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan text-white text-sm">
-                                <option value="full_name" {{ request('sort_by') === 'full_name' ? 'selected' : '' }}>Full Name</option>
-                                <option value="rom" {{ request('sort_by') === 'rom' ? 'selected' : '' }}>ROM</option>
-                                <option value="year" {{ request('sort_by') === 'year' ? 'selected' : '' }}>Year</option>
-                                <option value="manufacturer" {{ request('sort_by') === 'manufacturer' ? 'selected' : '' }}>Manufacturer</option>
-                                <option value="hardware_board" {{ request('sort_by') === 'hardware_board' ? 'selected' : '' }}>Hardware Board</option>
+                                @if($system === 'chd')
+                                    <option value="rom" {{ request('sort_by') === 'rom' ? 'selected' : '' }}>ROM</option>
+                                    <option value="size" {{ request('sort_by') === 'size' ? 'selected' : '' }}>Size</option>
+                                @else
+                                    <option value="full_name" {{ request('sort_by') === 'full_name' ? 'selected' : '' }}>Full Name</option>
+                                    <option value="rom" {{ request('sort_by') === 'rom' ? 'selected' : '' }}>ROM</option>
+                                    <option value="year" {{ request('sort_by') === 'year' ? 'selected' : '' }}>Year</option>
+                                    <option value="manufacturer" {{ request('sort_by') === 'manufacturer' ? 'selected' : '' }}>Manufacturer</option>
+                                    <option value="hardware_board" {{ request('sort_by') === 'hardware_board' ? 'selected' : '' }}>Hardware Board</option>
+                                @endif
                             </select>
                             <select name="sort_order" class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan text-white text-sm">
                                 <option value="asc" {{ request('sort_order') === 'asc' ? 'selected' : '' }}>ASC</option>
@@ -252,6 +285,7 @@
                     </div>
                 </div>
 
+                @if($system !== 'chd')
                 <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 gap-4 pt-2">
                     <!-- BIOS Boolean -->
                     <div>
@@ -296,6 +330,18 @@
                         </a>
                     </div>
                 </div>
+                @else
+                <div class="flex justify-end pt-2">
+                    <div class="flex items-center space-x-2 w-full sm:w-auto">
+                        <button type="submit" class="px-6 py-2 bg-retro-cyan hover:bg-opacity-85 rounded-lg text-black font-tech text-xs uppercase tracking-wider transition font-bold">
+                            Apply
+                        </button>
+                        <a href="{{ url('/admin?system=chd') }}" class="px-3 py-2 bg-retro-card hover:bg-opacity-80 rounded-lg border border-retro-border text-gray-400 hover:text-white text-xs transition flex items-center justify-center" title="Reset Filters">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </a>
+                    </div>
+                </div>
+                @endif
             </form>
         </section>
 
@@ -306,56 +352,112 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="border-b border-retro-border bg-retro-card bg-opacity-70 text-xs font-tech text-retro-cyan uppercase tracking-wider">
-                            <th class="py-4 px-6">ROM</th>
-                            <th class="py-4 px-4">Full Name</th>
-                            <th class="py-4 px-4">Year</th>
-                            <th class="py-4 px-4">Manufacturer</th>
-                            <th class="py-4 px-4">Hardware</th>
-                            <th class="py-4 px-4 text-center">CHD</th>
-                            <th class="py-4 px-6 text-right">Actions</th>
+                            @if($system === 'chd')
+                                <th class="py-4 px-6">ROM</th>
+                                <th class="py-4 px-4 text-center">Size</th>
+                                <th class="py-4 px-6 text-right">Actions</th>
+                            @else
+                                <th class="py-4 px-6">ROM</th>
+                                <th class="py-4 px-4">Full Name</th>
+                                <th class="py-4 px-4">Year</th>
+                                <th class="py-4 px-4">Manufacturer</th>
+                                <th class="py-4 px-4">Hardware</th>
+                                <th class="py-4 px-4 text-center">CHD</th>
+                                <th class="py-4 px-4 text-center">Size</th>
+                                <th class="py-4 px-6 text-right">Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-retro-border divide-opacity-30 text-sm">
                         @forelse($mames as $mame)
                             <tr class="hover:bg-retro-card hover:bg-opacity-40 transition group">
-                                <td class="py-4 px-6 font-tech font-bold text-white tracking-wide">
-                                    <span class="group-hover:text-retro-cyan transition-colors">{{ $mame->rom }}</span>
-                                </td>
-                                <td class="py-4 px-4 max-w-xs truncate font-sans text-gray-200">
-                                    {{ $mame->full_name }}
-                                </td>
-                                <td class="py-4 px-4 font-tech text-gray-400">
-                                    {{ $mame->year ?? '----' }}
-                                </td>
-                                <td class="py-4 px-4 text-gray-300 max-w-xxs truncate">
-                                    {{ $mame->manufacturer }}
-                                </td>
-                                <td class="py-4 px-4 text-gray-400 max-w-xxs truncate font-tech">
-                                    {{ $mame->hardware ?? $mame->driver ?? '----' }}
-                                </td>
-                                <td class="py-4 px-4 text-center">
-                                    @if($mame->use_chds)
-                                        <i class="fa-solid fa-circle-check text-retro-cyan text-base" title="Requires CHD"></i>
-                                    @else
-                                        <i class="fa-regular fa-circle text-gray-700 text-base" title="No CHD Required"></i>
-                                    @endif
-                                </td>
-                                <td class="py-4 px-6 text-right space-x-2">
-                                    <button onclick="showEdit({{ json_encode($mame) }})" 
-                                            class="px-2 py-1 bg-retro-card border border-retro-border hover:border-retro-magenta text-xs font-tech uppercase tracking-wider text-gray-300 hover:text-retro-magenta rounded transition">
-                                        Edit
-                                    </button>
-                                    <button onclick="showDetails({{ json_encode($mame) }})" 
-                                            class="px-2 py-1 bg-retro-card border border-retro-border hover:border-retro-cyan text-xs font-tech uppercase tracking-wider text-gray-300 hover:text-retro-cyan rounded transition">
-                                        Inspect
-                                    </button>
-                                </td>
+                                @if($system === 'chd')
+                                    <td class="py-4 px-6 font-tech font-bold text-white tracking-wide">
+                                        <span class="group-hover:text-retro-cyan transition-colors">{{ $mame->rom }}</span>
+                                    </td>
+                                    <td class="py-4 px-4 text-center font-tech text-gray-400">
+                                        {{ formatSizeFromMb($mame->size) }}
+                                    </td>
+                                    <td class="py-4 px-6 text-right space-x-2">
+                                        <button onclick="showEditChd({{ json_encode($mame) }})" 
+                                                class="px-2 py-1 bg-retro-card border border-retro-border hover:border-retro-magenta text-xs font-tech uppercase tracking-wider text-gray-300 hover:text-retro-magenta rounded transition">
+                                            Edit
+                                        </button>
+                                        <form action="{{ route('admin.chd.destroy', $mame->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this CHD?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="px-2 py-1 bg-retro-card border border-retro-border hover:border-retro-red text-xs font-tech uppercase tracking-wider text-gray-400 hover:text-retro-red rounded transition">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                @else
+                                    <td class="py-4 px-6 font-tech font-bold text-white tracking-wide">
+                                        <span class="group-hover:text-retro-cyan transition-colors">{{ $mame->rom }}</span>
+                                    </td>
+                                    <td class="py-4 px-4 max-w-xs truncate font-sans text-gray-200">
+                                        {{ $mame->full_name }}
+                                    </td>
+                                    <td class="py-4 px-4 font-tech text-gray-400">
+                                        {{ $mame->year ?? '----' }}
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-300 max-w-xxs truncate">
+                                        {{ $mame->manufacturer }}
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-400 max-w-xxs truncate font-tech">
+                                        {{ $mame->hardware ?? $mame->driver ?? '----' }}
+                                    </td>
+                                    <td class="py-4 px-4 text-center">
+                                        @if($mame->use_chds)
+                                            <i class="fa-solid fa-circle-check text-retro-cyan text-base" title="Requires CHD"></i>
+                                        @else
+                                            <i class="fa-regular fa-circle text-gray-700 text-base" title="No CHD Required"></i>
+                                        @endif
+                                    </td>
+                                    <td class="py-4 px-4 text-center font-tech text-gray-400">
+                                        @if($mame->total_size > 0)
+                                            <span>{{ formatSizeFromMb($mame->total_size) }}</span>
+                                            @if($mame->chd)
+                                                <span class="text-[10px] text-pink-500 block leading-none mt-1">(incl. CHD)</span>
+                                            @endif
+                                        @else
+                                            <span>—</span>
+                                        @endif
+                                    </td>
+                                    <td class="py-4 px-6 text-right space-x-2">
+                                        <button onclick="showEdit({{ json_encode($mame) }})" 
+                                                class="px-2 py-1 bg-retro-card border border-retro-border hover:border-retro-magenta text-xs font-tech uppercase tracking-wider text-gray-300 hover:text-retro-magenta rounded transition">
+                                            Edit
+                                        </button>
+                                        <button onclick="showDetails({{ json_encode($mame) }})" 
+                                                class="px-2 py-1 bg-retro-card border border-retro-border hover:border-retro-cyan text-xs font-tech uppercase tracking-wider text-gray-300 hover:text-retro-cyan rounded transition">
+                                            Inspect
+                                        </button>
+                                        @if($system === 'fbneo')
+                                            <form action="{{ route('admin.fbneo.destroy', $mame->rom) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to remove this ROM from FBNeo?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="px-2 py-1 bg-retro-card border border-retro-border hover:border-retro-red text-xs font-tech uppercase tracking-wider text-gray-400 hover:text-retro-red rounded transition">
+                                                    Remove
+                                                </button>
+                                            </form>
+                                        @else
+                                            <form action="{{ route('admin.mame.destroy', $mame->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this MAME ROM?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="px-2 py-1 bg-retro-card border border-retro-border hover:border-retro-red text-xs font-tech uppercase tracking-wider text-gray-400 hover:text-retro-red rounded transition">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </td>
+                                @endif
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="py-12 text-center text-gray-500 font-tech">
+                                <td colspan="{{ $system === 'chd' ? 3 : 8 }}" class="py-12 text-center text-gray-500 font-tech">
                                     <i class="fa-solid fa-circle-exclamation text-3xl mb-3 block text-retro-border"></i>
-                                    No MAME entries found matching the filter criteria.
+                                    No entries found matching the filter criteria.
                                 </td>
                             </tr>
                         @endforelse
@@ -458,6 +560,10 @@
                         <h4 class="text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Display Stats</h4>
                         <p id="inspect-display" class="text-gray-200 text-sm font-tech"></p>
                     </div>
+                    <div>
+                        <h4 class="text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">File Size</h4>
+                        <p id="inspect-size" class="text-gray-200 text-sm font-tech"></p>
+                    </div>
                 </div>
 
                 <!-- Flag Badges Grid -->
@@ -558,12 +664,177 @@
         </div>
     </div>
 
+    <!-- Add Record Modal -->
+    <div id="add-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="glass-card max-w-2xl w-full rounded-2xl border border-retro-magenta overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <form action="{{ route('admin.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="system" value="{{ $system }}">
+                
+                <!-- Modal Header -->
+                <div class="px-6 py-4 bg-retro-card border-b border-retro-border flex justify-between items-center">
+                    <div>
+                        <span class="text-xs font-tech text-retro-magenta uppercase tracking-widest">Add New Record</span>
+                        <h3 class="font-arcade text-xl font-extrabold text-white uppercase tracking-wider">
+                            @if($system === 'chd')
+                                Add CHD Record
+                            @elseif($system === 'fbneo')
+                                Add FBNeo ROM
+                            @else
+                                Add MAME ROM
+                            @endif
+                        </h3>
+                    </div>
+                    <button type="button" onclick="closeAdd()" class="text-gray-400 hover:text-white transition">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Modal Body -->
+                <div class="p-6 space-y-6 max-h-[70vh] overflow-y-auto">
+                    @if($system === 'chd')
+                        <div>
+                            <label class="block text-xs font-tech text-retro-magenta uppercase tracking-wider mb-1">ROM Name (matching MAME ROM)</label>
+                            <input type="text" name="rom" required class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-magenta focus:outline-none text-white text-sm font-tech">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Size (MB)</label>
+                            <input type="number" step="0.01" name="size" required class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-magenta focus:outline-none text-white text-sm font-tech">
+                        </div>
+                    @else
+                        <div>
+                            <label class="block text-xs font-tech text-retro-magenta uppercase tracking-wider mb-1">ROM Name</label>
+                            <input type="text" name="rom" required class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-magenta focus:outline-none text-white text-sm font-tech">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-tech text-retro-magenta uppercase tracking-wider mb-1">Full Name / Description</label>
+                            <input type="text" name="full_name" class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-magenta focus:outline-none text-white text-sm">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Manufacturer</label>
+                                <input type="text" name="manufacturer" class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-magenta focus:outline-none text-white text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Year</label>
+                                <input type="text" name="year" class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-magenta focus:outline-none text-white text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Driver Name</label>
+                                <input type="text" name="driver" class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-magenta focus:outline-none text-white text-sm font-tech">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Source File</label>
+                                <input type="text" name="sourcefile" class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-magenta focus:outline-none text-white text-sm font-tech">
+                            </div>
+                            <div class="col-span-2">
+                                <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Base Size (MB)</label>
+                                <input type="number" step="0.01" name="size" class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-magenta focus:outline-none text-white text-sm font-tech">
+                            </div>
+                        </div>
+
+                        <!-- Flag Badges Grid -->
+                        <div class="border-t border-retro-border border-opacity-40 pt-4">
+                            <h4 class="text-xs font-tech text-gray-400 uppercase tracking-wider mb-3">System Properties</h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <label class="flex items-center space-x-3 cursor-pointer text-sm font-tech text-retro-cyan">
+                                    <input type="checkbox" name="use_bios" value="1" class="h-4 w-4 rounded border-retro-border bg-retro-bg text-retro-cyan focus:ring-retro-cyan focus:ring-opacity-25">
+                                    <span>System BIOS</span>
+                                </label>
+                                <label class="flex items-center space-x-3 cursor-pointer text-sm font-tech text-pink-400">
+                                    <input type="checkbox" name="use_chds" value="1" class="h-4 w-4 rounded border-retro-border bg-retro-bg text-retro-magenta focus:ring-retro-magenta focus:ring-opacity-25">
+                                    <span>Uses CHDs</span>
+                                </label>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="px-6 py-4 bg-retro-card border-t border-retro-border flex justify-end space-x-2">
+                    <button type="button" onclick="closeAdd()" class="px-4 py-2 bg-retro-card border border-retro-border hover:border-white text-white font-tech text-sm uppercase tracking-wider rounded-lg transition">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-5 py-2 bg-retro-cyan hover:bg-opacity-85 text-black font-tech text-sm uppercase tracking-wider rounded-lg transition font-bold">
+                        Add Record
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit CHD Modal -->
+    <div id="edit-chd-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="glass-card max-w-md w-full rounded-2xl border border-retro-magenta overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <form id="edit-chd-form" action="" method="POST">
+                @csrf
+                @method('PUT')
+                
+                <!-- Modal Header -->
+                <div class="px-6 py-4 bg-retro-card border-b border-retro-border flex justify-between items-center">
+                    <div>
+                        <span class="text-xs font-tech text-retro-magenta uppercase tracking-widest">Edit CHD ROM</span>
+                        <h3 id="edit-chd-rom-title" class="font-arcade text-xl font-extrabold text-white uppercase tracking-wider"></h3>
+                    </div>
+                    <button type="button" onclick="closeEditChd()" class="text-gray-400 hover:text-white transition">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Modal Body -->
+                <div class="p-6 space-y-6">
+                    <div>
+                        <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Size (MB)</label>
+                        <input type="number" step="0.01" name="size" id="edit-chd-size" required class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-magenta focus:outline-none text-white text-sm font-tech">
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="px-6 py-4 bg-retro-card border-t border-retro-border flex justify-end space-x-2">
+                    <button type="button" onclick="closeEditChd()" class="px-4 py-2 bg-retro-card border border-retro-border hover:border-white text-white font-tech text-sm uppercase tracking-wider rounded-lg transition">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-5 py-2 bg-retro-cyan hover:bg-opacity-85 text-black font-tech text-sm uppercase tracking-wider rounded-lg transition">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Inspector & Edit Logic -->
     <script>
         const detailsModal = document.getElementById('inspector-modal');
         const editModal = document.getElementById('edit-modal');
         const editForm = document.getElementById('edit-form');
+        const addModal = document.getElementById('add-modal');
+        const editChdModal = document.getElementById('edit-chd-modal');
+        const editChdForm = document.getElementById('edit-chd-form');
         
+        function showAdd() {
+            addModal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeAdd() {
+            addModal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function showEditChd(chd) {
+            editChdForm.action = `/admin/chd/${chd.id}`;
+            document.getElementById('edit-chd-rom-title').innerText = chd.rom;
+            document.getElementById('edit-chd-size').value = chd.size || '';
+            editChdModal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeEditChd() {
+            editChdModal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
         function showDetails(mame) {
             // Text nodes
             document.getElementById('inspect-rom-name').innerText = mame.rom;
@@ -588,6 +859,24 @@
                 }
             }
             document.getElementById('inspect-display').innerText = displayInfo;
+
+            // Display size info
+            function formatSize(mb) {
+                if (!mb || mb <= 0) return '—';
+                if (mb < 1) return (mb * 1024).toFixed(1) + ' KB';
+                if (mb >= 1024) return (mb / 1024).toFixed(2) + ' GB';
+                return mb.toFixed(2) + ' MB';
+            }
+
+            let sizeInfo = '—';
+            if (mame.size && mame.chd) {
+                sizeInfo = `${formatSize(mame.size)} + ${formatSize(mame.chd.size)} (Total: ${formatSize(mame.total_size)})`;
+            } else if (mame.size) {
+                sizeInfo = formatSize(mame.size);
+            } else if (mame.chd) {
+                sizeInfo = `${formatSize(mame.chd.size)} (CHD Only)`;
+            }
+            document.getElementById('inspect-size').innerText = sizeInfo;
 
             // Badges helper
             setModalBadge('badge-bios', mame.use_bios, 'text-retro-cyan', 'border-retro-cyan');
@@ -648,6 +937,8 @@
             if (event.key === 'Escape') {
                 closeDetails();
                 closeEdit();
+                closeAdd();
+                closeEditChd();
             }
         });
 
@@ -658,6 +949,12 @@
             }
             if (event.target === editModal) {
                 closeEdit();
+            }
+            if (event.target === addModal) {
+                closeAdd();
+            }
+            if (event.target === editChdModal) {
+                closeEditChd();
             }
         });
     </script>

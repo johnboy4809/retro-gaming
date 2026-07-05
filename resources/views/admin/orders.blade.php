@@ -50,7 +50,7 @@
     <!-- Top Neon Bar -->
     <div class="h-1 w-full bg-retro-cyan"></div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="w-full max-w-none px-4 sm:px-8 lg:px-12 py-6">
         
         <!-- Header -->
         <header class="flex flex-col md:flex-row justify-between items-center mb-8 pb-6 border-b border-retro-border border-opacity-40">

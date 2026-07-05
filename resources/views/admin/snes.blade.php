@@ -49,7 +49,7 @@
     <!-- Top Neon Bar -->
     <div class="h-1 w-full bg-retro-cyan"></div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="w-full max-w-none px-4 sm:px-8 lg:px-12 py-6">
 
         <!-- Header -->
         <header class="flex flex-col md:flex-row justify-between items-center mb-8 pb-6 border-b border-retro-border border-opacity-40">
@@ -204,7 +204,7 @@
                                     'rom'          => 'ROM / Title',
                                     'region'       => 'Region',
                                     'release_date' => 'Release Date',
-                                    'size_mb'      => 'Size (MB)',
+                                    'size_mb'      => 'Size',
                                     'crc32'        => 'CRC32',
                                 ];
                             @endphp
@@ -244,7 +244,7 @@
                                     <span class="font-tech text-xs text-gray-400">{{ $snes->release_date ?? '—' }}</span>
                                 </td>
                                 <td class="px-4 py-3">
-                                    <span class="font-tech text-xs text-gray-400">{{ $snes->size_mb ? $snes->size_mb . ' MB' : '—' }}</span>
+                                    <span class="font-tech text-xs text-gray-400">{{ formatSizeFromMb($snes->size_mb) }}</span>
                                 </td>
                                 <td class="px-4 py-3">
                                     <span class="font-tech text-xs text-gray-600 tracking-widest">{{ $snes->crc32 ?? '—' }}</span>

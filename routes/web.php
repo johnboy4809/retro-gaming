@@ -30,7 +30,12 @@ Route::post('/checkout', [CartController::class, 'checkout'])->middleware('auth'
 // Authenticated Admin Group
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/', [MameController::class, 'index'])->name('admin.dashboard');
+    Route::post('/store', [MameController::class, 'store'])->name('admin.store');
     Route::put('/mame/{mame}', [MameController::class, 'update'])->name('admin.mame.update');
+    Route::put('/chd/{chd}', [MameController::class, 'updateChd'])->name('admin.chd.update');
+    Route::delete('/mame/{mame}', [MameController::class, 'destroy'])->name('admin.mame.destroy');
+    Route::delete('/chd/{chd}', [MameController::class, 'destroyChd'])->name('admin.chd.destroy');
+    Route::delete('/fbneo/{rom}', [MameController::class, 'destroyFbneo'])->name('admin.fbneo.destroy');
     Route::get('/orders', [MameController::class, 'ordersIndex'])->name('admin.orders');
     Route::post('/orders/{order}/status', [MameController::class, 'orderUpdateStatus'])->name('admin.orders.status');
     // Console group
