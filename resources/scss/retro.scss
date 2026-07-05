@@ -1,0 +1,68 @@
+$retro-bg: #0a051b;
+$retro-card: #120b2d;
+$retro-border: #3b257e;
+$retro-cyan: #00f0ff;
+$retro-magenta: #ff007f;
+$retro-purple: #9d4edd;
+$retro-green: #39ff14;
+
+/* Custom Neon Glow Styles for Retro Gaming Portal */
+
+/* Scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: $retro-bg;
+}
+::-webkit-scrollbar-thumb {
+    background: $retro-border;
+    border-radius: 4px;
+    &:hover {
+        background: $retro-magenta;
+    }
+}
+
+/* Custom glassmorphism details */
+.glass-card {
+    background: rgba(18, 11, 45, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Neon Glows */
+.neon-glow-cyan {
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(0, 240, 255, 0.05);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+}
+.neon-glow-magenta {
+    box-shadow: 0 0 15px rgba(255, 0, 127, 0.15), inset 0 0 10px rgba(255, 0, 127, 0.05);
+    border: 1px solid rgba(255, 0, 127, 0.3);
+}
+.neon-glow-purple {
+    box-shadow: 0 0 15px rgba(157, 78, 221, 0.15), inset 0 0 10px rgba(157, 78, 221, 0.05);
+    border: 1px solid rgba(157, 78, 221, 0.3);
+}
+
+/* Neon text glows */
+.neon-text-cyan {
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
+}
+.neon-text-magenta {
+    text-shadow: 0 0 8px rgba(255, 0, 127, 0.6);
+}
+
+/* --- Dashboard Specific Styles --- */
+body.dashboard-body {
+    background-color: #0c0822;
+    min-height: 100vh;
+    color: #e2e8f0;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* --- Login Specific Styles --- */
+body.login-body {
+    background-color: #0c0822;
+}
