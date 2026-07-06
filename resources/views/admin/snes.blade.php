@@ -32,7 +32,7 @@
                     fontFamily: {
                         arcade: ['Orbitron', 'sans-serif'],
                         tech: ['Share Tech Mono', 'monospace'],
-                        sans: ['Rajdhani', 'sans-serif']
+                        sans: ['Orbitron', 'sans-serif']
                     }
                 }
             }
