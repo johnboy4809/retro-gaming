@@ -30,6 +30,7 @@ Route::post('/checkout', [CartController::class, 'checkout'])->middleware('auth'
 // Authenticated Admin Group
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/', [MameController::class, 'index'])->name('admin.dashboard');
+    Route::get('/arcade-italia/{rom}', [MameController::class, 'getArcadeItaliaMetadata'])->name('admin.arcade-italia.metadata');
     Route::post('/store', [MameController::class, 'store'])->name('admin.store');
     Route::put('/mame/{mame}', [MameController::class, 'update'])->name('admin.mame.update');
     Route::put('/chd/{chd}', [MameController::class, 'updateChd'])->name('admin.chd.update');

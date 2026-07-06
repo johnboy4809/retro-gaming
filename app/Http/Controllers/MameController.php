@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Mame;
 use App\Models\ArcadeBoard;
 use App\Models\Order;
+use App\Services\ArcadeItaliaService;
 
 class MameController extends Controller
 {
@@ -230,5 +231,14 @@ class MameController extends Controller
     {
         \App\Models\Fbneo::where('rom', $rom)->delete();
         return redirect()->back()->with('success', 'ROM removed from FBNeo catalog successfully!');
+    }
+
+    public function getArcadeItaliaMetadata($rom, ArcadeItaliaService $service)
+    {
+        $data = $service->getGameMetadata($rom);
+        if (!$data) {
+            return response()->json(['error' => 'Metadata not found or API request failed.'], 404);
+        }
+        return response()->json($data);
     }
 }
