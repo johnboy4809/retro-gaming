@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Drive - 80s Chrome Effect</title>
+
+    <!-- Load the heavy geometric font Orbitron from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base page styling to anchor the dark synthwave mood */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0c011a;
+            height: 100vh;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+        }
+
+        /* Container mimicking the environment in Firefly_Veo_remove the cars and have the cam 468312 qLr.mp4 */
+        .retro-drive-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            max-width: 1000px;
+            /* Radial background mimics the low neon sun melting into the night sky */
+            background: radial-gradient(circle at 50% 70%, #ff00a0 0%, #170b3b 50%, #0c011a 90%);
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            border: 3px solid #00f3ff;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.3), inset 0 0 30px rgba(0, 243, 255, 0.2);
+            border-radius: 8px;
+        }
+
+        /* 3D Perspective Grid Highway */
+        .grid-floor {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 45%;
+            /* Uses linear-gradients to construct the neon cyan grid mesh */
+            background-image:
+                linear-gradient(rgba(0, 243, 255, 0.4) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.4) 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: center bottom;
+            /* Flattens the grid backward into a 3D plane */
+            transform: perspective(180px) rotateX(65deg);
+            transform-origin: top center;
+            /* Infinite forward highway movement animation */
+            animation: drive-forward 1.5s linear infinite;
+        }
+
+        /* Creates the illusion of driving down the neon grid track */
+        @keyframes drive-forward {
+            from {
+                background-position: center 0px;
+            }
+
+            to {
+                background-position: center 50px;
+            }
+        }
+
+        /* The Bulky Chrome Text Fill */
+        .synth-chrome-text {
+            position: relative;
+            z-index: 2;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 5.5rem;
+            letter-spacing: 6px;
+            margin: 0;
+            padding: 10px;
+            text-align: center;
+
+            /* Chrome gradient mapping sampled directly from the reference video palette */
+            background: linear-gradient(to bottom,
+                    #170b3b 0%,
+                    /* Dark sky purple at the top tip */
+                    #3f1b77 35%,
+                    /* Mid-sky purple */
+                    #ff00a0 47%,
+                    /* Magenta sun glare edge */
+                    #ffffff 49%,
+                    /* White hot horizon reflection flash */
+                    #051c24 51%,
+                    /* Ground shadow baseline split */
+                    #00f3ff 56%,
+                    /* Electric cyan car trail highlight */
+                    #008fa3 80%,
+                    /* Deep trail turquoise */
+                    #120224 100%
+                    /* Deep bottom ambient shadow */
+                );
+
+            /* Restricts the gradient background solely to the lettering geometry */
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            /* Combined double neon glow: sharp pink edge pop and a soft teal atmospheric blur */
+            filter:
+                drop-shadow(0 0 2px #ff00a0) drop-shadow(0 0 20px rgba(0, 243, 255, 0.55));
+        }
+
+        /* Responsive scaling so text fits nicely on smaller viewports */
+        @media (max-width: 768px) {
+            .synth-chrome-text {
+                font-size: 3.5rem;
+                letter-spacing: 3px;
+            }
+
+            .retro-drive-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="retro-drive-container">
+        <!-- The animated perspective highway grid -->
+        <div class="grid-floor"></div>
+
+        <!-- Bulky chrome title text -->
+        <h1 class="synth-chrome-text">RETRO DRIVE</h1>
+    </div>
+
+</body>
+
+</html>

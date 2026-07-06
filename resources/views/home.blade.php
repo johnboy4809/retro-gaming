@@ -72,7 +72,7 @@
                 <i class="fa-solid fa-hard-drive text-xl text-retro-cyan"></i>
             </div>
             <div>
-                <span class="font-arcade text-xl font-black uppercase tracking-wider text-white">Retro Drives</span>
+                <img src="{{ asset('images/retro-drive-logo.gif') }}" alt="Retro Drives" class="h-8 object-contain mb-1">
                 <span class="block text-[10px] font-tech text-retro-cyan tracking-widest uppercase">Games you want to play</span>
             </div>
         </div>
@@ -119,9 +119,10 @@
         <!-- Hero text — centred, sits over the shared background -->
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20 md:py-32">
 
-            <h1 class="font-arcade text-5xl md:text-7xl font-black tracking-wider uppercase text-retro-cyan mb-3 leading-tight">
-                Retro Drives
-            </h1>
+            <h1 class="sr-only">Retro Drives</h1>
+            <div class="flex justify-center mb-4">
+                <img src="{{ asset('images/retro-drive-logo.gif') }}" alt="Retro Drives Logo" class="hero-logo-glow h-24 md:h-40 object-contain drop-shadow-2xl">
+            </div>
             <p class="hero-tagline font-arcade text-xl md:text-2xl text-white uppercase tracking-widest mb-6">
                 Games you want to play
             </p>
@@ -458,8 +459,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-6">
                 <div class="md:col-span-2">
                     <div class="flex items-center space-x-2 mb-3">
-                        <i class="fa-solid fa-hard-drive text-retro-cyan"></i>
-                        <span class="font-arcade text-sm text-white uppercase tracking-wider">Retro Drives</span>
+                        <img src="{{ asset('images/retro-drive-logo.gif') }}" alt="Retro Drives" class="h-8 object-contain">
                     </div>
                     <p class="text-gray-600 text-xs font-tech leading-relaxed mb-4 max-w-sm">Custom retro gaming drives, handcrafted and posted to your door. Games you want to play.</p>
                     <div class="inline-flex items-center space-x-3 bg-retro-card border border-retro-border rounded-lg px-3 py-2">

@@ -135,6 +135,11 @@ body.login-body {
     text-shadow: 0 0 10px rgba(0, 180, 200, 0.5);
 }
 
+/* Hero logo drop shadow */
+.hero-logo-glow {
+    filter: drop-shadow(0 0 15px rgba(0, 180, 200, 0.4));
+}
+
 /* Infinite Marquee */
 .marquee-container {
     width: 100%;
