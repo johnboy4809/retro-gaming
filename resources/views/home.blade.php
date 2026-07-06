@@ -76,7 +76,7 @@
             </div>
             <div>
                 <span class="font-arcade text-xl font-black uppercase tracking-wider text-white">Retro Drives</span>
-                <span class="block text-[10px] font-tech text-retro-cyan tracking-widest uppercase">Your games. Your drive.</span>
+                <span class="block text-[10px] font-tech text-retro-cyan tracking-widest uppercase">Games you want to play</span>
             </div>
         </div>
         <div class="flex items-center space-x-2">
@@ -425,7 +425,7 @@
                 </div>
             </div>
             <div class="border-t border-retro-border border-opacity-20 pt-4 text-center text-gray-700 text-xs font-tech">
-                Retro Drives &copy; {{ date('Y') }} — Your games. Your drive. Your nostalgia.
+                Retro Drives &copy; {{ date('Y') }} — Games you want to play.
             </div>
         </div>
     </footer>
