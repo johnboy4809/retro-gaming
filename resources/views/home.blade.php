@@ -476,10 +476,9 @@
                     <p class="text-gray-600 text-xs font-tech leading-relaxed mb-4 max-w-sm">Custom retro gaming drives, handcrafted and posted to your door. Games you want to play.</p>
                     <div class="inline-flex items-center space-x-3 bg-retro-card border border-retro-border rounded-lg px-3 py-2">
                         <div class="text-gray-400 text-[10px] font-tech uppercase tracking-widest">Powered by</div>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Batocera.linux_logo.svg/320px-Batocera.linux_logo.svg.png" 
+                        <img src="{{ asset('images/logos/batocera.png') }}" 
                              alt="Batocera.linux" 
-                             class="h-5 object-contain"
-                             onerror="this.onerror=null; this.src='https://batocera.org/images/logo.svg'; this.onerror=function(){this.style.display='none';};">
+                             class="h-5 object-contain">
                         <span class="font-arcade text-sm text-white">BATOCERA</span>
                     </div>
                 </div>
