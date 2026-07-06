@@ -18,11 +18,13 @@
                 extend: {
                     colors: {
                         retro: {
-                            bg: '#0f0c1b',
-                            card: '#16122c',
-                            border: '#2a2456',
-                            cyan: '#00b4c8',
-                            magenta: '#ff007f',
+                            bg: '#120224',
+                            card: '#170b3b',
+                            border: '#3f1b77',
+                            cyan: '#00f3ff',
+                            magenta: '#ff00a0',
+                            teal: '#008fa3',
+                            dark: '#051c24',
                             purple: '#9d4edd',
                             green: '#39ff14',
                         }

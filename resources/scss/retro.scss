@@ -1,8 +1,10 @@
-$retro-bg: #0a051b;
-$retro-card: #120b2d;
-$retro-border: #3b257e;
-$retro-cyan: #00b4c8;
-$retro-magenta: #ff007f;
+$retro-bg: #120224;
+$retro-card: #170b3b;
+$retro-border: #3f1b77;
+$retro-cyan: #00f3ff;
+$retro-magenta: #ff00a0;
+$retro-teal: #008fa3;
+$retro-dark: #051c24;
 $retro-purple: #9d4edd;
 $retro-green: #39ff14;
 
@@ -44,7 +46,7 @@ $retro-green: #39ff14;
 
 /* --- Dashboard Specific Styles --- */
 body.dashboard-body {
-    background-color: #0c0822;
+    background-color: $retro-bg;
     min-height: 100vh;
     color: #e2e8f0;
     position: relative;
@@ -53,7 +55,7 @@ body.dashboard-body {
 
 /* --- Login Specific Styles --- */
 body.login-body {
-    background-color: #0c0822;
+    background-color: $retro-bg;
 }
 
 /* --- Home page --- */
