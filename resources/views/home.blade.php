@@ -119,9 +119,12 @@
         <!-- Hero text — centred, sits over the shared background -->
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20 md:py-32">
 
-            <h1 class="font-arcade text-4xl md:text-6xl font-black tracking-wider uppercase text-retro-cyan mb-6 leading-tight">
-                Your Custom<br>Retro Gaming Drive
+            <h1 class="font-arcade text-5xl md:text-7xl font-black tracking-wider uppercase text-retro-cyan mb-3 leading-tight">
+                Retro Drives
             </h1>
+            <p class="hero-tagline font-arcade text-xl md:text-2xl text-white uppercase tracking-widest mb-6">
+                Games you want to play
+            </p>
             <p class="text-gray-200 text-base md:text-lg leading-relaxed mb-4 max-w-2xl mx-auto">
                 Pick the games you love from <span class="text-retro-cyan font-semibold">{{ number_format(\App\Models\Mame::count() + \App\Models\Snes::count()) }}+</span> ROMs across arcade, console and home computer platforms.
             </p>
