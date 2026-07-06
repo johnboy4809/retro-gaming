@@ -118,30 +118,42 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex-1 py-12">
 
-        <!-- Hero Section -->
-        <section class="text-center max-w-4xl mx-auto mb-20">
-            <div class="inline-flex items-center space-x-2 bg-retro-card border border-retro-border rounded-full px-4 py-1.5 mb-6">
+    <!-- Hero Section — with video first-frame background -->
+    <section class="relative mb-20 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
+        <!-- Background Image -->
+        <div class="absolute inset-0 overflow-hidden">
+            <img src="{{ asset('images/hero-frame.png') }}"
+                 alt="Retro Drives — synthwave cityscape"
+                 class="w-full h-full object-cover object-center">
+            <!-- Dark overlay so text is legible -->
+            <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(10,5,27,0.55) 0%, rgba(10,5,27,0.75) 60%, rgba(10,5,27,1) 100%);"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="relative text-center max-w-4xl mx-auto py-24 md:py-36">
+            <div class="inline-flex items-center space-x-2 bg-black bg-opacity-40 border border-retro-border rounded-full px-4 py-1.5 mb-6">
                 <span class="h-2 w-2 rounded-full bg-retro-green"></span>
                 <span class="font-tech text-xs text-gray-400 uppercase tracking-widest">Handcrafted &amp; posted to you</span>
             </div>
             <h1 class="font-arcade text-4xl md:text-6xl font-black tracking-wider uppercase text-retro-cyan mb-6 leading-tight">
                 Your Custom<br>Retro Gaming Drive
             </h1>
-            <p class="text-gray-300 text-base md:text-lg leading-relaxed mb-4 max-w-2xl mx-auto">
+            <p class="text-gray-200 text-base md:text-lg leading-relaxed mb-4 max-w-2xl mx-auto">
                 Pick the classic games you love from our library of <span class="text-retro-cyan font-semibold">{{ number_format(\App\Models\Mame::count() + \App\Models\Snes::count()) }}+</span> ROMs across arcade, console and home computer platforms.
             </p>
-            <p class="text-gray-500 text-sm leading-relaxed mb-10 max-w-2xl mx-auto">
+            <p class="text-gray-400 text-sm leading-relaxed mb-10 max-w-2xl mx-auto">
                 We load them onto your chosen media and post it straight to your door — ready to plug into your PC or Raspberry Pi.
             </p>
             <div class="flex flex-wrap justify-center gap-3">
                 <a href="{{ route('register') }}" class="px-7 py-3.5 bg-retro-cyan text-black font-arcade text-xs uppercase tracking-wider rounded-xl transition hover:bg-opacity-85">
                     Start Building Your Drive
                 </a>
-                <a href="#how-it-works" class="px-7 py-3.5 bg-retro-card border border-retro-border hover:border-retro-cyan text-white font-arcade text-xs uppercase tracking-wider rounded-xl transition">
+                <a href="#how-it-works" class="px-7 py-3.5 bg-black bg-opacity-50 border border-retro-border hover:border-retro-cyan text-white font-arcade text-xs uppercase tracking-wider rounded-xl transition">
                     How It Works
                 </a>
             </div>
-        </section>
+        </div>
+    </section>
 
         <!-- Media Format Cards -->
         <section class="mb-20">
