@@ -471,7 +471,8 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-6">
                 <div class="md:col-span-2">
                     <div class="flex items-center space-x-2 mb-3">
-                        <img src="{{ asset('images/retro-drives-logo.png') }}" alt="Retro Drives" class="h-8 object-contain">
+                        <i class="fa-solid fa-hard-drive text-retro-cyan"></i>
+                        <span class="font-arcade text-sm text-white uppercase tracking-wider">Retro Drives</span>
                     </div>
                     <p class="text-gray-600 text-xs font-tech leading-relaxed mb-4 max-w-sm">Custom retro gaming drives, handcrafted and posted to your door. Games you want to play.</p>
                     <div class="inline-flex items-center space-x-3 bg-retro-card border border-retro-border rounded-lg px-3 py-2">
