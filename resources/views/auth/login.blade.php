@@ -21,7 +21,7 @@
                             bg: '#0f0c1b',
                             card: '#16122c',
                             border: '#2a2456',
-                            cyan: '#00f0ff',
+                            cyan: '#00b4c8',
                             magenta: '#ff007f',
                             purple: '#9d4edd',
                             green: '#39ff14',

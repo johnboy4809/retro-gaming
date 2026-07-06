@@ -23,7 +23,7 @@
                             bg: '#0a051b',
                             card: '#120b2d',
                             border: '#3b257e',
-                            cyan: '#00f0ff',
+                            cyan: '#00b4c8',
                             magenta: '#ff007f',
                             purple: '#9d4edd',
                             green: '#39ff14',
@@ -118,10 +118,7 @@
     <section class="relative w-full">
         <!-- Hero text — centred, sits over the shared background -->
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20 md:py-32">
-            <div class="inline-flex items-center space-x-2 bg-black bg-opacity-50 border border-retro-border rounded-full px-4 py-1.5 mb-6">
-                <span class="h-2 w-2 rounded-full bg-retro-green"></span>
-                <span class="font-tech text-xs text-gray-300 uppercase tracking-widest">Handcrafted &amp; posted to you</span>
-            </div>
+
             <h1 class="font-arcade text-4xl md:text-6xl font-black tracking-wider uppercase text-retro-cyan mb-6 leading-tight">
                 Your Custom<br>Retro Gaming Drive
             </h1>
@@ -326,7 +323,7 @@
                     <div class="mt-auto pt-4 border-t border-retro-border border-opacity-30">
                         <div class="flex items-center space-x-2 text-xs font-tech text-gray-500">
                             <i class="fa-solid fa-truck text-retro-green"></i>
-                            <span>Handcrafted &bull; Posted direct to your door</span>
+                            <span>Posted direct to your door</span>
                         </div>
                     </div>
                 </div>
