@@ -455,13 +455,21 @@
     <!-- Footer -->
     <footer class="border-t border-retro-border border-opacity-20 mt-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
-                <div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-6">
+                <div class="md:col-span-2">
                     <div class="flex items-center space-x-2 mb-3">
                         <i class="fa-solid fa-hard-drive text-retro-cyan"></i>
                         <span class="font-arcade text-sm text-white uppercase tracking-wider">Retro Drives</span>
                     </div>
-                    <p class="text-gray-600 text-xs font-tech leading-relaxed">Custom retro gaming drives, handcrafted and posted to your door. Games you want to play.</p>
+                    <p class="text-gray-600 text-xs font-tech leading-relaxed mb-4 max-w-sm">Custom retro gaming drives, handcrafted and posted to your door. Games you want to play.</p>
+                    <div class="inline-flex items-center space-x-3 bg-retro-card border border-retro-border rounded-lg px-3 py-2">
+                        <div class="text-gray-400 text-[10px] font-tech uppercase tracking-widest">Powered by</div>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Batocera.linux_logo.svg/320px-Batocera.linux_logo.svg.png" 
+                             alt="Batocera.linux" 
+                             class="h-5 object-contain"
+                             onerror="this.onerror=null; this.src='https://batocera.org/images/logo.svg'; this.onerror=function(){this.style.display='none';};">
+                        <span class="font-arcade text-sm text-white">BATOCERA</span>
+                    </div>
                 </div>
                 <div>
                     <h4 class="font-tech text-xs text-gray-500 uppercase tracking-widest mb-3">Media Options</h4>
