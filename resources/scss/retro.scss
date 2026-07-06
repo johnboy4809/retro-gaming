@@ -117,6 +117,15 @@ body.login-body {
         color: $retro-bg !important;
         border-color: $retro-cyan !important;
 
-        i { color: $retro-bg !important; }
+        /* Force inner elements to be dark for contrast against the cyan background */
+        i, 
+        .text-white, 
+        .text-gray-400, 
+        .text-gray-500, 
+        .text-gray-600, 
+        .text-retro-cyan, 
+        .text-retro-green { 
+            color: $retro-bg !important; 
+        }
     }
 }
