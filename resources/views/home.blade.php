@@ -80,8 +80,8 @@
     <!-- Navigation Header -->
     <nav class="w-full px-4 sm:px-6 lg:px-8 py-5 border-b border-retro-border border-opacity-40 flex justify-between items-center max-w-7xl mx-auto">
         <div class="flex items-center space-x-3">
-            <div class="p-2 bg-retro-card rounded-lg border border-retro-cyan">
-                <i class="fa-solid fa-hard-drive text-xl text-retro-cyan"></i>
+            <div class="p-2 bg-retro-card rounded-lg border border-retro-cyan flex items-center justify-center">
+                <img src="{{ asset('images/retro-drives-icon.png') }}" alt="Icon" class="w-8 h-8 object-contain">
             </div>
             <div>
                 <img src="{{ asset('images/retro-drives-logo.png') }}" alt="Retro Drives" class="h-8 object-contain mb-1">
@@ -471,7 +471,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-6">
                 <div class="md:col-span-2">
                     <div class="flex items-center space-x-2 mb-3">
-                        <i class="fa-solid fa-hard-drive text-retro-cyan"></i>
+                        <img src="{{ asset('images/retro-drives-icon.png') }}" alt="Icon" class="w-6 h-6 object-contain">
                         <span class="font-arcade text-sm text-white uppercase tracking-wider">Retro Drives</span>
                     </div>
                     <p class="text-gray-600 text-xs font-tech leading-relaxed mb-4 max-w-sm">Custom retro gaming drives, handcrafted and posted to your door. Games you want to play.</p>
