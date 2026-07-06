@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retro Drives – Custom Retro Gaming Drives | USB & SD Card</title>
+    <title>Retro Drives – Custom Retro Gaming Drives | USB &amp; SD Card</title>
     <meta name="description" content="Build your own custom retro gaming drive. Choose from thousands of arcade, console and home computer games. Supplied on USB stick or SD card for Raspberry Pi.">
 
     <!-- Fonts -->
@@ -48,28 +48,49 @@
 
     <style>
         .cabinet-glow:hover { border-color: #00f0ff; }
-        .media-card:hover { border-color: #00f0ff; transform: translateY(-2px); }
-        .media-card { transition: border-color 0.2s, transform 0.2s; }
         .step-number {
             width: 2.5rem; height: 2.5rem;
-            background: #00f0ff;
-            color: #0a051b;
+            background: #00f0ff; color: #0a051b;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-family: 'Orbitron', sans-serif;
-            font-weight: 800;
-            font-size: 0.9rem;
-            flex-shrink: 0;
+            font-weight: 800; font-size: 0.9rem; flex-shrink: 0;
+        }
+        /* Platform selector */
+        .platform-btn { transition: all 0.2s; }
+        .platform-btn.active {
+            background: #00f0ff !important;
+            color: #0a051b !important;
+            border-color: #00f0ff !important;
+        }
+        /* Size selector */
+        .size-btn { transition: all 0.2s; }
+        .size-btn.active {
+            background: #00f0ff !important;
+            color: #0a051b !important;
+            border-color: #00f0ff !important;
         }
     </style>
 </head>
 <body class="dashboard-body font-sans antialiased flex flex-col min-h-screen">
 
-    <!-- Top Neon Bar -->
+    <!-- ============================================================
+         FULL-BLEED HEADER + HERO — image sits behind nav and hero
+    ============================================================ -->
+    <div class="relative">
+
+        <!-- Background image — spans nav bar and hero text -->
+        <img src="{{ asset('images/hero-frame.png') }}"
+             alt="Retro Drives — synthwave cityscape"
+             class="absolute inset-0 w-full h-full object-cover object-center">
+        <!-- Dark overlay: stronger at top for nav legibility, fades to solid at bottom -->
+        <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(10,5,27,0.60) 0%, rgba(10,5,27,0.65) 40%, rgba(10,5,27,0.85) 70%, rgba(10,5,27,1) 100%);"></div>
+
+        <!-- Top Neon Bar -->
     <div class="h-1 w-full bg-retro-cyan"></div>
 
     <!-- Navigation Header -->
-    <nav class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-5 border-b border-retro-border border-opacity-40 flex justify-between items-center">
+    <nav class="w-full px-4 sm:px-6 lg:px-8 py-5 border-b border-retro-border border-opacity-40 flex justify-between items-center max-w-7xl mx-auto">
         <div class="flex items-center space-x-3">
             <div class="p-2 bg-retro-card rounded-lg border border-retro-cyan">
                 <i class="fa-solid fa-hard-drive text-xl text-retro-cyan"></i>
@@ -115,165 +136,167 @@
         </div>
     </nav>
 
-    <!-- Main Container -->
-    <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex-1 py-12">
+        <!-- Hero text sits inside the same relative wrapper -->
 
-    <!-- Hero Section — with video first-frame background -->
-    <section class="relative mb-20 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
-        <!-- Background Image -->
-        <div class="absolute inset-0 overflow-hidden">
-            <img src="{{ asset('images/hero-frame.png') }}"
-                 alt="Retro Drives — synthwave cityscape"
-                 class="w-full h-full object-cover object-center">
-            <!-- Dark overlay so text is legible -->
-            <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(10,5,27,0.55) 0%, rgba(10,5,27,0.75) 60%, rgba(10,5,27,1) 100%);"></div>
-        </div>
-
-        <!-- Hero Content -->
-        <div class="relative text-center max-w-4xl mx-auto py-24 md:py-36">
-            <div class="inline-flex items-center space-x-2 bg-black bg-opacity-40 border border-retro-border rounded-full px-4 py-1.5 mb-6">
+    <!-- Hero content -->
+    <section class="relative w-full">
+        <!-- Hero text — centred, sits over the shared background -->
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20 md:py-32">
+            <div class="inline-flex items-center space-x-2 bg-black bg-opacity-50 border border-retro-border rounded-full px-4 py-1.5 mb-6">
                 <span class="h-2 w-2 rounded-full bg-retro-green"></span>
-                <span class="font-tech text-xs text-gray-400 uppercase tracking-widest">Handcrafted &amp; posted to you</span>
+                <span class="font-tech text-xs text-gray-300 uppercase tracking-widest">Handcrafted &amp; posted to you</span>
             </div>
             <h1 class="font-arcade text-4xl md:text-6xl font-black tracking-wider uppercase text-retro-cyan mb-6 leading-tight">
                 Your Custom<br>Retro Gaming Drive
             </h1>
             <p class="text-gray-200 text-base md:text-lg leading-relaxed mb-4 max-w-2xl mx-auto">
-                Pick the classic games you love from our library of <span class="text-retro-cyan font-semibold">{{ number_format(\App\Models\Mame::count() + \App\Models\Snes::count()) }}+</span> ROMs across arcade, console and home computer platforms.
+                Pick the games you love from <span class="text-retro-cyan font-semibold">{{ number_format(\App\Models\Mame::count() + \App\Models\Snes::count()) }}+</span> ROMs across arcade, console and home computer platforms.
             </p>
             <p class="text-gray-400 text-sm leading-relaxed mb-10 max-w-2xl mx-auto">
-                We load them onto your chosen media and post it straight to your door — ready to plug into your PC or Raspberry Pi.
+                We load them onto your chosen drive and post it straight to your door — plug in and play on PC, Mac or Raspberry Pi.
             </p>
             <div class="flex flex-wrap justify-center gap-3">
                 <a href="{{ route('register') }}" class="px-7 py-3.5 bg-retro-cyan text-black font-arcade text-xs uppercase tracking-wider rounded-xl transition hover:bg-opacity-85">
                     Start Building Your Drive
                 </a>
-                <a href="#how-it-works" class="px-7 py-3.5 bg-black bg-opacity-50 border border-retro-border hover:border-retro-cyan text-white font-arcade text-xs uppercase tracking-wider rounded-xl transition">
-                    How It Works
+                <a href="#choose-platform" class="px-7 py-3.5 bg-black bg-opacity-50 border border-retro-border hover:border-retro-cyan text-white font-arcade text-xs uppercase tracking-wider rounded-xl transition">
+                    See Options
                 </a>
             </div>
         </div>
     </section>
 
-        <!-- Media Format Cards -->
-        <section class="mb-20">
-            <h2 class="font-arcade text-lg font-bold text-white text-center uppercase tracking-wider mb-2">Choose Your Media</h2>
-            <p class="text-center text-gray-500 font-tech text-xs uppercase tracking-wider mb-8">USB stick for PC &bull; SD card for Raspberry Pi</p>
+    </div><!-- end full-bleed wrapper -->
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <!-- ============================================================
+         MAIN CONTENT — back inside max-w container
+    ============================================================ -->
+    <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex-1 py-16">
 
-                <!-- 16 GB -->
-                <div class="media-card glass-card rounded-xl border border-retro-border p-5">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <div class="p-2.5 bg-retro-card rounded-lg border border-retro-border">
-                            <i class="fa-solid fa-memory text-retro-cyan text-lg"></i>
-                        </div>
-                        <div>
-                            <div class="font-arcade text-xl font-bold text-white">16 GB</div>
-                            <div class="font-tech text-[10px] text-gray-500 uppercase tracking-wider">Starter</div>
-                        </div>
-                    </div>
-                    <ul class="space-y-1.5 mb-4">
-                        <li class="flex items-center space-x-2 text-xs font-tech text-gray-400">
-                            <i class="fa-solid fa-check text-retro-green text-[10px]"></i>
-                            <span>~2,000 arcade ROMs</span>
-                        </li>
-                        <li class="flex items-center space-x-2 text-xs font-tech text-gray-400">
-                            <i class="fa-solid fa-check text-retro-green text-[10px]"></i>
-                            <span>USB 3.0 or MicroSD</span>
-                        </li>
-                        <li class="flex items-center space-x-2 text-xs font-tech text-gray-400">
-                            <i class="fa-solid fa-check text-retro-green text-[10px]"></i>
-                            <span>PC &amp; Raspberry Pi</span>
-                        </li>
-                    </ul>
-                    <span class="inline-block w-full text-center text-[10px] font-tech text-gray-600 uppercase border-t border-retro-border pt-3">Good for casual play</span>
+        <!-- ============================================================
+             STEP 1 + 2: Platform → Size chooser
+        ============================================================ -->
+        <section id="choose-platform" class="mb-20">
+            <h2 class="font-arcade text-lg font-bold text-white text-center uppercase tracking-wider mb-2">Choose Your Drive</h2>
+            <p class="text-center text-gray-500 font-tech text-xs uppercase tracking-wider mb-10">Select your device, then pick your storage size</p>
+
+            <!-- STEP 1: Platform -->
+            <div class="mb-8">
+                <p class="font-tech text-xs text-gray-500 uppercase tracking-widest text-center mb-4">
+                    <span class="inline-flex items-center space-x-2">
+                        <span class="step-number text-[11px]" style="width:1.6rem;height:1.6rem;font-size:0.7rem;">1</span>
+                        <span>What device will you use it on?</span>
+                    </span>
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+
+                    <!-- PC -->
+                    <button id="btn-pc" onclick="selectPlatform('pc')"
+                            class="platform-btn glass-card rounded-xl border border-retro-border p-5 text-center hover:border-retro-cyan">
+                        <i class="fa-brands fa-windows text-3xl text-gray-400 mb-3 block"></i>
+                        <div class="font-arcade text-sm font-bold text-white uppercase tracking-wide mb-1">PC</div>
+                        <div class="font-tech text-[10px] text-gray-500 uppercase">Windows</div>
+                        <div class="font-tech text-[10px] text-gray-600 mt-2">USB 3.0 Stick</div>
+                    </button>
+
+                    <!-- Mac -->
+                    <button id="btn-mac" onclick="selectPlatform('mac')"
+                            class="platform-btn glass-card rounded-xl border border-retro-border p-5 text-center hover:border-retro-cyan">
+                        <i class="fa-brands fa-apple text-3xl text-gray-400 mb-3 block"></i>
+                        <div class="font-arcade text-sm font-bold text-white uppercase tracking-wide mb-1">Mac</div>
+                        <div class="font-tech text-[10px] text-gray-500 uppercase">macOS</div>
+                        <div class="font-tech text-[10px] text-gray-600 mt-2">USB 3.0 Stick</div>
+                    </button>
+
+                    <!-- Raspberry Pi -->
+                    <button id="btn-pi" onclick="selectPlatform('pi')"
+                            class="platform-btn glass-card rounded-xl border border-retro-border p-5 text-center hover:border-retro-cyan">
+                        <i class="fa-brands fa-raspberry-pi text-3xl text-gray-400 mb-3 block"></i>
+                        <div class="font-arcade text-sm font-bold text-white uppercase tracking-wide mb-1">Pi</div>
+                        <div class="font-tech text-[10px] text-gray-500 uppercase">Raspberry Pi</div>
+                        <div class="font-tech text-[10px] text-gray-600 mt-2">MicroSD Card</div>
+                    </button>
+
                 </div>
+            </div>
 
-                <!-- 32 GB -->
-                <div class="media-card glass-card rounded-xl border border-retro-border p-5">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <div class="p-2.5 bg-retro-card rounded-lg border border-retro-border">
-                            <i class="fa-solid fa-memory text-retro-purple text-lg"></i>
-                        </div>
-                        <div>
-                            <div class="font-arcade text-xl font-bold text-white">32 GB</div>
-                            <div class="font-tech text-[10px] text-gray-500 uppercase tracking-wider">Standard</div>
-                        </div>
-                    </div>
-                    <ul class="space-y-1.5 mb-4">
-                        <li class="flex items-center space-x-2 text-xs font-tech text-gray-400">
-                            <i class="fa-solid fa-check text-retro-green text-[10px]"></i>
-                            <span>~5,000+ ROMs</span>
-                        </li>
-                        <li class="flex items-center space-x-2 text-xs font-tech text-gray-400">
-                            <i class="fa-solid fa-check text-retro-green text-[10px]"></i>
-                            <span>USB 3.0 or MicroSD</span>
-                        </li>
-                        <li class="flex items-center space-x-2 text-xs font-tech text-gray-400">
-                            <i class="fa-solid fa-check text-retro-green text-[10px]"></i>
-                            <span>Arcade + Console mix</span>
-                        </li>
-                    </ul>
-                    <span class="inline-block w-full text-center text-[10px] font-tech text-gray-600 uppercase border-t border-retro-border pt-3">Most popular</span>
+            <!-- STEP 2: Size (shown after platform selected) -->
+            <div id="size-selector" class="hidden">
+                <p class="font-tech text-xs text-gray-500 uppercase tracking-widest text-center mb-4">
+                    <span class="inline-flex items-center space-x-2">
+                        <span class="step-number text-[11px]" style="width:1.6rem;height:1.6rem;font-size:0.7rem;">2</span>
+                        <span>How much storage do you need?</span>
+                    </span>
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+
+                    <!-- 16 GB -->
+                    <button id="btn-16" onclick="selectSize(16)"
+                            class="size-btn glass-card rounded-xl border border-retro-border p-5 text-center hover:border-retro-cyan">
+                        <div class="font-arcade text-2xl font-bold text-white mb-1">16 <span class="text-sm">GB</span></div>
+                        <div class="font-tech text-[10px] text-gray-500 uppercase mb-3">Starter</div>
+                        <ul class="space-y-1 text-left">
+                            <li class="flex items-center space-x-1.5 text-xs font-tech text-gray-400">
+                                <i class="fa-solid fa-check text-retro-green text-[9px]"></i>
+                                <span>~2,000 arcade ROMs</span>
+                            </li>
+                            <li class="flex items-center space-x-1.5 text-xs font-tech text-gray-400">
+                                <i class="fa-solid fa-check text-retro-green text-[9px]"></i>
+                                <span>Great for casual play</span>
+                            </li>
+                        </ul>
+                    </button>
+
+                    <!-- 32 GB -->
+                    <button id="btn-32" onclick="selectSize(32)"
+                            class="size-btn glass-card rounded-xl border border-retro-border p-5 text-center hover:border-retro-cyan">
+                        <div class="font-arcade text-2xl font-bold text-white mb-1">32 <span class="text-sm">GB</span></div>
+                        <div class="font-tech text-[10px] text-gray-500 uppercase mb-3">Standard</div>
+                        <ul class="space-y-1 text-left">
+                            <li class="flex items-center space-x-1.5 text-xs font-tech text-gray-400">
+                                <i class="fa-solid fa-check text-retro-green text-[9px]"></i>
+                                <span>~5,000+ ROMs</span>
+                            </li>
+                            <li class="flex items-center space-x-1.5 text-xs font-tech text-gray-400">
+                                <i class="fa-solid fa-check text-retro-green text-[9px]"></i>
+                                <span>Arcade + Console mix</span>
+                            </li>
+                        </ul>
+                        <div class="mt-3 text-[9px] font-tech text-retro-cyan uppercase tracking-widest">Most popular</div>
+                    </button>
+
+                    <!-- 64 GB -->
+                    <button id="btn-64" onclick="selectSize(64)"
+                            class="size-btn glass-card rounded-xl border border-retro-border p-5 text-center hover:border-retro-cyan">
+                        <div class="font-arcade text-2xl font-bold text-white mb-1">64 <span class="text-sm">GB</span></div>
+                        <div class="font-tech text-[10px] text-gray-500 uppercase mb-3">Ultimate</div>
+                        <ul class="space-y-1 text-left">
+                            <li class="flex items-center space-x-1.5 text-xs font-tech text-gray-400">
+                                <i class="fa-solid fa-check text-retro-green text-[9px]"></i>
+                                <span>Full catalog</span>
+                            </li>
+                            <li class="flex items-center space-x-1.5 text-xs font-tech text-gray-400">
+                                <i class="fa-solid fa-check text-retro-green text-[9px]"></i>
+                                <span>Arcade, Console &amp; Home Computer</span>
+                            </li>
+                        </ul>
+                        <div class="mt-3 text-[9px] font-tech text-retro-cyan uppercase tracking-widest">Best value</div>
+                    </button>
+
                 </div>
+            </div>
 
-                <!-- 64 GB -->
-                <div class="media-card glass-card rounded-xl border border-retro-cyan p-5">
-                    <div class="flex items-center justify-between mb-1">
-                        <span class="text-[9px] font-tech text-retro-cyan uppercase tracking-widest bg-retro-cyan bg-opacity-10 px-2 py-0.5 rounded-full border border-retro-cyan border-opacity-30">Best Value</span>
+            <!-- Summary panel (shown after both selected) -->
+            <div id="drive-summary" class="hidden max-w-2xl mx-auto mt-8">
+                <div class="glass-card rounded-xl border border-retro-cyan p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div>
+                        <div class="font-tech text-[10px] text-gray-500 uppercase tracking-widest mb-1">Your selection</div>
+                        <div id="summary-text" class="font-arcade text-lg text-retro-cyan font-bold uppercase"></div>
+                        <div id="summary-media" class="font-tech text-xs text-gray-400 mt-1"></div>
                     </div>
-                    <div class="flex items-center space-x-3 mb-4">
-                        <div class="p-2.5 bg-retro-card rounded-lg border border-retro-cyan">
-                            <i class="fa-solid fa-hard-drive text-retro-cyan text-lg"></i>
-                        </div>
-                        <div>
-                            <div class="font-arcade text-xl font-bold text-retro-cyan">64 GB</div>
-                            <div class="font-tech text-[10px] text-gray-500 uppercase tracking-wider">Ultimate</div>
-                        </div>
-                    </div>
-                    <ul class="space-y-1.5 mb-4">
-                        <li class="flex items-center space-x-2 text-xs font-tech text-gray-400">
-                            <i class="fa-solid fa-check text-retro-green text-[10px]"></i>
-                            <span>Full catalog selection</span>
-                        </li>
-                        <li class="flex items-center space-x-2 text-xs font-tech text-gray-400">
-                            <i class="fa-solid fa-check text-retro-green text-[10px]"></i>
-                            <span>USB 3.0 or MicroSD</span>
-                        </li>
-                        <li class="flex items-center space-x-2 text-xs font-tech text-gray-400">
-                            <i class="fa-solid fa-check text-retro-green text-[10px]"></i>
-                            <span>Arcade, Console &amp; Home Computer</span>
-                        </li>
-                    </ul>
-                    <span class="inline-block w-full text-center text-[10px] font-tech text-retro-cyan uppercase border-t border-retro-cyan border-opacity-30 pt-3">For the serious collector</span>
-                </div>
-
-                <!-- Raspberry Pi -->
-                <div class="media-card glass-card rounded-xl border border-retro-border p-5">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <div class="p-2.5 bg-retro-card rounded-lg border border-retro-border">
-                            <i class="fa-brands fa-raspberry-pi text-retro-magenta text-lg"></i>
-                        </div>
-                        <div>
-                            <div class="font-arcade text-base font-bold text-white leading-tight">Raspberry<br>Pi Ready</div>
-                        </div>
-                    </div>
-                    <ul class="space-y-1.5 mb-4">
-                        <li class="flex items-center space-x-2 text-xs font-tech text-gray-400">
-                            <i class="fa-solid fa-check text-retro-green text-[10px]"></i>
-                            <span>MicroSD cards</span>
-                        </li>
-                        <li class="flex items-center space-x-2 text-xs font-tech text-gray-400">
-                            <i class="fa-solid fa-check text-retro-green text-[10px]"></i>
-                            <span>16, 32 or 64 GB</span>
-                        </li>
-                        <li class="flex items-center space-x-2 text-xs font-tech text-gray-400">
-                            <i class="fa-solid fa-check text-retro-green text-[10px]"></i>
-                            <span>RetroPie compatible</span>
-                        </li>
-                    </ul>
-                    <span class="inline-block w-full text-center text-[10px] font-tech text-gray-600 uppercase border-t border-retro-border pt-3">Plug in and play</span>
+                    <a href="{{ route('register') }}" class="flex-shrink-0 px-6 py-3 bg-retro-cyan text-black font-arcade text-xs uppercase tracking-wider rounded-xl transition hover:bg-opacity-85">
+                        Start Building →
+                    </a>
                 </div>
             </div>
         </section>
@@ -289,7 +312,7 @@
                         <div class="step-number">1</div>
                         <div>
                             <h3 class="font-arcade text-sm font-bold text-white uppercase tracking-wide mb-1">Browse &amp; Select</h3>
-                            <p class="text-gray-400 text-sm leading-relaxed">Create a free account and browse our full ROM catalog. Search by game title, platform, or manufacturer and add the titles you want to your drive.</p>
+                            <p class="text-gray-400 text-sm leading-relaxed">Create a free account and browse our full ROM catalog. Search by game title, platform, or manufacturer and add the titles you want.</p>
                         </div>
                     </div>
                     <div class="mt-auto pt-4 border-t border-retro-border border-opacity-30">
@@ -304,14 +327,14 @@
                     <div class="flex items-start space-x-4 mb-4">
                         <div class="step-number">2</div>
                         <div>
-                            <h3 class="font-arcade text-sm font-bold text-white uppercase tracking-wide mb-1">Choose Your Media</h3>
-                            <p class="text-gray-400 text-sm leading-relaxed">Select a 16, 32, or 64 GB USB stick for Windows/PC, or a MicroSD card if you're running a Raspberry Pi with RetroPie or Recalbox.</p>
+                            <h3 class="font-arcade text-sm font-bold text-white uppercase tracking-wide mb-1">Choose Your Drive</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Select PC, Mac or Raspberry Pi, then pick your storage size — 16, 32, or 64 GB. USB sticks for PC/Mac, MicroSD for Pi.</p>
                         </div>
                     </div>
                     <div class="mt-auto pt-4 border-t border-retro-border border-opacity-30">
                         <div class="flex items-center space-x-2 text-xs font-tech text-gray-500">
-                            <i class="fa-solid fa-sd-card text-retro-purple"></i>
-                            <span>USB 3.0 &bull; MicroSD &bull; All sizes</span>
+                            <i class="fa-solid fa-hard-drive text-retro-purple"></i>
+                            <span>USB 3.0 &bull; MicroSD &bull; 16 / 32 / 64 GB</span>
                         </div>
                     </div>
                 </div>
@@ -321,13 +344,13 @@
                         <div class="step-number">3</div>
                         <div>
                             <h3 class="font-arcade text-sm font-bold text-white uppercase tracking-wide mb-1">We Post It To You</h3>
-                            <p class="text-gray-400 text-sm leading-relaxed">We load your selected games onto the drive and post it to your door. Just plug it in and start playing — no setup, no fuss.</p>
+                            <p class="text-gray-400 text-sm leading-relaxed">We load your selected games onto the drive and post it to your door. Plug in and start playing — no setup, no fuss.</p>
                         </div>
                     </div>
                     <div class="mt-auto pt-4 border-t border-retro-border border-opacity-30">
                         <div class="flex items-center space-x-2 text-xs font-tech text-gray-500">
                             <i class="fa-solid fa-truck text-retro-green"></i>
-                            <span>Handcrafted &bull; Posted direct</span>
+                            <span>Handcrafted &bull; Posted direct to your door</span>
                         </div>
                     </div>
                 </div>
@@ -344,13 +367,13 @@
                     <i class="fa-solid fa-gamepad text-3xl text-retro-cyan mb-3 block"></i>
                     <div class="font-arcade text-3xl font-bold text-retro-cyan mb-1">{{ number_format(\App\Models\Mame::count()) }}</div>
                     <div class="font-arcade text-sm text-white uppercase tracking-wider mb-2">Arcade ROMs</div>
-                    <p class="text-gray-500 text-xs font-tech">MAME &amp; FBNeo — the classic arcade experience. Street Fighter, Pac-Man, Metal Slug and thousands more.</p>
+                    <p class="text-gray-500 text-xs font-tech">MAME &amp; FBNeo — Street Fighter, Pac-Man, Metal Slug and thousands more classics.</p>
                 </div>
                 <div class="glass-card rounded-xl border border-retro-border p-6 text-center">
                     <i class="fa-solid fa-tv text-3xl text-retro-purple mb-3 block"></i>
                     <div class="font-arcade text-3xl font-bold text-retro-purple mb-1">{{ number_format(\App\Models\Snes::count()) }}</div>
                     <div class="font-arcade text-sm text-white uppercase tracking-wider mb-2">SNES ROMs</div>
-                    <p class="text-gray-500 text-xs font-tech">Super Nintendo — Mario, Zelda, Donkey Kong Country and the full golden-age console library.</p>
+                    <p class="text-gray-500 text-xs font-tech">Super Nintendo — Mario, Zelda, Donkey Kong Country and the full golden-age library.</p>
                 </div>
                 <div class="glass-card rounded-xl border border-retro-border p-6 text-center">
                     <i class="fa-solid fa-computer text-3xl text-retro-yellow mb-3 block"></i>
@@ -417,14 +440,14 @@
                         <i class="fa-solid fa-hard-drive text-retro-cyan"></i>
                         <span class="font-arcade text-sm text-white uppercase tracking-wider">Retro Drives</span>
                     </div>
-                    <p class="text-gray-600 text-xs font-tech leading-relaxed">Custom retro gaming drives, handcrafted and posted to your door. Your games, your media.</p>
+                    <p class="text-gray-600 text-xs font-tech leading-relaxed">Custom retro gaming drives, handcrafted and posted to your door. Games you want to play.</p>
                 </div>
                 <div>
                     <h4 class="font-tech text-xs text-gray-500 uppercase tracking-widest mb-3">Media Options</h4>
                     <ul class="space-y-1.5 text-xs font-tech text-gray-600">
-                        <li>USB Stick — 16 GB, 32 GB, 64 GB</li>
-                        <li>MicroSD — 16 GB, 32 GB, 64 GB</li>
-                        <li>Raspberry Pi (RetroPie / Recalbox)</li>
+                        <li>PC &amp; Mac — USB 3.0 Stick (16, 32, 64 GB)</li>
+                        <li>Raspberry Pi — MicroSD (16, 32, 64 GB)</li>
+                        <li>RetroPie / Recalbox compatible</li>
                     </ul>
                 </div>
                 <div>
@@ -441,6 +464,59 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        let selectedPlatform = null;
+        let selectedSize = null;
+
+        const mediaLabels = {
+            pc: { label: 'PC (Windows)', media: 'USB 3.0 Stick', icon: 'fa-brands fa-windows' },
+            mac: { label: 'Mac (macOS)', media: 'USB 3.0 Stick', icon: 'fa-brands fa-apple' },
+            pi: { label: 'Raspberry Pi', media: 'MicroSD Card', icon: 'fa-brands fa-raspberry-pi' },
+        };
+
+        function selectPlatform(p) {
+            selectedPlatform = p;
+            selectedSize = null;
+
+            // Update button states
+            ['pc', 'mac', 'pi'].forEach(id => {
+                const btn = document.getElementById('btn-' + id);
+                btn.classList.remove('active');
+                btn.querySelector('i').classList.remove('text-retro-bg');
+                btn.querySelector('i').classList.add('text-gray-400');
+            });
+            const activeBtn = document.getElementById('btn-' + p);
+            activeBtn.classList.add('active');
+            activeBtn.querySelector('i').classList.remove('text-gray-400');
+            activeBtn.querySelector('i').classList.add('text-[#0a051b]');
+
+            // Reset size buttons
+            [16, 32, 64].forEach(s => {
+                document.getElementById('btn-' + s).classList.remove('active');
+            });
+
+            // Show size selector
+            document.getElementById('size-selector').classList.remove('hidden');
+            document.getElementById('drive-summary').classList.add('hidden');
+        }
+
+        function selectSize(s) {
+            selectedSize = s;
+
+            // Update size button states
+            [16, 32, 64].forEach(id => {
+                document.getElementById('btn-' + id).classList.remove('active');
+            });
+            document.getElementById('btn-' + s).classList.add('active');
+
+            // Show summary
+            const info = mediaLabels[selectedPlatform];
+            document.getElementById('summary-text').textContent = info.label + ' — ' + s + ' GB';
+            document.getElementById('summary-media').textContent = info.media + ' · ' + s + ' GB';
+            document.getElementById('drive-summary').classList.remove('hidden');
+        }
+    </script>
 
 </body>
 </html>
