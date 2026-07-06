@@ -150,6 +150,51 @@
     <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex-1 py-16">
 
         <!-- ============================================================
+             SYSTEMS MARQUEE
+        ============================================================ -->
+        <section class="mb-20 overflow-hidden">
+            <div class="marquee-container py-4 border-y border-retro-border border-opacity-30 bg-retro-card bg-opacity-30">
+                <div class="marquee-content flex items-center">
+                    <!-- First set -->
+                    <span class="font-arcade text-gray-500 uppercase tracking-widest text-sm opacity-70 hover:opacity-100 hover:text-retro-cyan transition-colors cursor-default">Commodore 64</span>
+                    <span class="text-retro-border opacity-50">&bull;</span>
+                    <span class="font-arcade text-gray-500 uppercase tracking-widest text-sm opacity-70 hover:opacity-100 hover:text-retro-magenta transition-colors cursor-default">Super Nintendo</span>
+                    <span class="text-retro-border opacity-50">&bull;</span>
+                    <span class="font-arcade text-gray-500 uppercase tracking-widest text-sm opacity-70 hover:opacity-100 hover:text-retro-green transition-colors cursor-default">Amiga 500</span>
+                    <span class="text-retro-border opacity-50">&bull;</span>
+                    <span class="font-arcade text-gray-500 uppercase tracking-widest text-sm opacity-70 hover:opacity-100 hover:text-retro-yellow transition-colors cursor-default">Arcade Classics</span>
+                    <span class="text-retro-border opacity-50">&bull;</span>
+                    <span class="font-arcade text-gray-500 uppercase tracking-widest text-sm opacity-70 hover:opacity-100 hover:text-retro-cyan transition-colors cursor-default">Sega Mega Drive</span>
+                    <span class="text-retro-border opacity-50">&bull;</span>
+                    <span class="font-arcade text-gray-500 uppercase tracking-widest text-sm opacity-70 hover:opacity-100 hover:text-retro-purple transition-colors cursor-default">ZX Spectrum</span>
+                    <span class="text-retro-border opacity-50">&bull;</span>
+                    <span class="font-arcade text-gray-500 uppercase tracking-widest text-sm opacity-70 hover:opacity-100 hover:text-retro-magenta transition-colors cursor-default">Neo Geo</span>
+                    <span class="text-retro-border opacity-50">&bull;</span>
+                    <span class="font-arcade text-gray-500 uppercase tracking-widest text-sm opacity-70 hover:opacity-100 hover:text-retro-cyan transition-colors cursor-default">Atari 2600</span>
+                    <span class="text-retro-border opacity-50">&bull;</span>
+                    
+                    <!-- Exact duplicate set for seamless scrolling -->
+                    <span class="font-arcade text-gray-500 uppercase tracking-widest text-sm opacity-70 hover:opacity-100 hover:text-retro-cyan transition-colors cursor-default">Commodore 64</span>
+                    <span class="text-retro-border opacity-50">&bull;</span>
+                    <span class="font-arcade text-gray-500 uppercase tracking-widest text-sm opacity-70 hover:opacity-100 hover:text-retro-magenta transition-colors cursor-default">Super Nintendo</span>
+                    <span class="text-retro-border opacity-50">&bull;</span>
+                    <span class="font-arcade text-gray-500 uppercase tracking-widest text-sm opacity-70 hover:opacity-100 hover:text-retro-green transition-colors cursor-default">Amiga 500</span>
+                    <span class="text-retro-border opacity-50">&bull;</span>
+                    <span class="font-arcade text-gray-500 uppercase tracking-widest text-sm opacity-70 hover:opacity-100 hover:text-retro-yellow transition-colors cursor-default">Arcade Classics</span>
+                    <span class="text-retro-border opacity-50">&bull;</span>
+                    <span class="font-arcade text-gray-500 uppercase tracking-widest text-sm opacity-70 hover:opacity-100 hover:text-retro-cyan transition-colors cursor-default">Sega Mega Drive</span>
+                    <span class="text-retro-border opacity-50">&bull;</span>
+                    <span class="font-arcade text-gray-500 uppercase tracking-widest text-sm opacity-70 hover:opacity-100 hover:text-retro-purple transition-colors cursor-default">ZX Spectrum</span>
+                    <span class="text-retro-border opacity-50">&bull;</span>
+                    <span class="font-arcade text-gray-500 uppercase tracking-widest text-sm opacity-70 hover:opacity-100 hover:text-retro-magenta transition-colors cursor-default">Neo Geo</span>
+                    <span class="text-retro-border opacity-50">&bull;</span>
+                    <span class="font-arcade text-gray-500 uppercase tracking-widest text-sm opacity-70 hover:opacity-100 hover:text-retro-cyan transition-colors cursor-default">Atari 2600</span>
+                    <span class="text-retro-border opacity-50">&bull;</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
              STEP 1 + 2: Platform → Size chooser
         ============================================================ -->
         <section id="choose-platform" class="mb-20">
