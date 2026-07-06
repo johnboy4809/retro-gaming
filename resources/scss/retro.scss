@@ -55,3 +55,68 @@ body.dashboard-body {
 body.login-body {
     background-color: #0c0822;
 }
+
+/* --- Home page --- */
+
+/* Hero full-bleed overlay */
+.hero-overlay {
+    background: linear-gradient(
+        to bottom,
+        rgba(10, 5, 27, 0.60) 0%,
+        rgba(10, 5, 27, 0.65) 40%,
+        rgba(10, 5, 27, 0.85) 70%,
+        rgba(10, 5, 27, 1)   100%
+    );
+}
+
+/* Cabinet card hover border */
+.cabinet-glow:hover {
+    border-color: $retro-cyan;
+}
+
+/* Numbered step circle */
+.step-number {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: $retro-cyan;
+    color: $retro-bg;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+/* Small numbered step badge (used inline in chooser labels) */
+.step-badge {
+    width: 1.6rem;
+    height: 1.6rem;
+    background: $retro-cyan;
+    color: $retro-bg;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+}
+
+/* Platform & size selector buttons */
+.platform-btn,
+.size-btn {
+    transition: all 0.2s;
+    cursor: pointer;
+
+    &.active {
+        background: $retro-cyan !important;
+        color: $retro-bg !important;
+        border-color: $retro-cyan !important;
+
+        i { color: $retro-bg !important; }
+    }
+}

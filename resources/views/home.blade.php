@@ -46,31 +46,7 @@
     <!-- External Retro CSS -->
     <link rel="stylesheet" href="{{ asset('css/retro.css') }}">
 
-    <style>
-        .cabinet-glow:hover { border-color: #00f0ff; }
-        .step-number {
-            width: 2.5rem; height: 2.5rem;
-            background: #00f0ff; color: #0a051b;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 800; font-size: 0.9rem; flex-shrink: 0;
-        }
-        /* Platform selector */
-        .platform-btn { transition: all 0.2s; }
-        .platform-btn.active {
-            background: #00f0ff !important;
-            color: #0a051b !important;
-            border-color: #00f0ff !important;
-        }
-        /* Size selector */
-        .size-btn { transition: all 0.2s; }
-        .size-btn.active {
-            background: #00f0ff !important;
-            color: #0a051b !important;
-            border-color: #00f0ff !important;
-        }
-    </style>
+
 </head>
 <body class="dashboard-body font-sans antialiased flex flex-col min-h-screen">
 
@@ -84,7 +60,7 @@
              alt="Retro Drives — synthwave cityscape"
              class="absolute inset-0 w-full h-full object-cover object-center">
         <!-- Dark overlay: stronger at top for nav legibility, fades to solid at bottom -->
-        <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(10,5,27,0.60) 0%, rgba(10,5,27,0.65) 40%, rgba(10,5,27,0.85) 70%, rgba(10,5,27,1) 100%);"></div>
+        <div class="hero-overlay absolute inset-0"></div>
 
         <!-- Top Neon Bar -->
     <div class="h-1 w-full bg-retro-cyan"></div>
@@ -184,7 +160,7 @@
             <div class="mb-8">
                 <p class="font-tech text-xs text-gray-500 uppercase tracking-widest text-center mb-4">
                     <span class="inline-flex items-center space-x-2">
-                        <span class="step-number text-[11px]" style="width:1.6rem;height:1.6rem;font-size:0.7rem;">1</span>
+                        <span class="step-badge">1</span>
                         <span>What device will you use it on?</span>
                     </span>
                 </p>
@@ -224,7 +200,7 @@
             <div id="size-selector" class="hidden">
                 <p class="font-tech text-xs text-gray-500 uppercase tracking-widest text-center mb-4">
                     <span class="inline-flex items-center space-x-2">
-                        <span class="step-number text-[11px]" style="width:1.6rem;height:1.6rem;font-size:0.7rem;">2</span>
+                        <span class="step-badge">2</span>
                         <span>How much storage do you need?</span>
                     </span>
                 </p>
