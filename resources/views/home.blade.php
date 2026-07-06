@@ -30,6 +30,16 @@
                             purple: '#9d4edd',
                             green: '#39ff14',
                             yellow: '#ffd700',
+                        },
+                        gray: {
+                            200: '#ffffff',
+                            300: '#f8fafc',
+                            400: '#f1f5f9',
+                            500: '#e2e8f0',
+                            600: '#cbd5e1',
+                            700: '#94a3b8',
+                            800: '#64748b',
+                            900: '#475569',
                         }
                     },
                     fontFamily: {
