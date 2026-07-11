@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
-use App\Models\Mame;
+use App\Models\ArcadeGame;
 use App\Models\ArcadeBoard;
 use Illuminate\Support\Facades\Storage;
 
@@ -200,16 +200,16 @@ class ImportMame extends Command
             $count++;
 
             if (count($batch) >= $batchSize) {
-                Mame::upsert($batch, ['rom'], array_keys(array_diff_key($batch[0], ['rom' => 1, 'created_at' => 1])));
+                ArcadeGame::upsert($batch, ['rom'], array_keys(array_diff_key($batch[0], ['rom' => 1, 'created_at' => 1])));
                 $batch = [];
                 $this->info("Imported {$count} records...");
             }
         }
 
         // Insert remaining
-        if (count($batch) > 0) {
-            Mame::upsert($batch, ['rom'], array_keys(array_diff_key($batch[0], ['rom' => 1, 'created_at' => 1])));
-            $this->info("Imported {$count} records...");
+        if (!empty($batch)) {
+            ArcadeGame::upsert($batch, ['rom'], array_keys(array_diff_key($batch[0], ['rom' => 1, 'created_at' => 1])));
+            $this->info("Imported final {$count} records...");
         }
 
         fclose($handle);

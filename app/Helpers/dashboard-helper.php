@@ -1,24 +1,30 @@
 <?php
 
-if (!function_exists('formatSizeFromMb')) {
+if (!function_exists('formatSizeFromBytes')) {
     /**
-     * Format a file size in megabytes to the most relevant unit (KB, MB, or GB).
+     * Format a file size in bytes to the most relevant unit (KB, MB, or GB).
      *
-     * @param float|null $sizeInMb
+     * @param int|null $sizeInBytes
      * @return string
      */
-    function formatSizeFromMb($sizeInMb) {
-        if (!$sizeInMb || $sizeInMb <= 0) {
+    function formatSizeFromBytes($sizeInBytes) {
+        if (!$sizeInBytes || $sizeInBytes <= 0) {
             return '—';
         }
-        if ($sizeInMb < 1) {
-            $kb = $sizeInMb * 1024;
-            return round($kb, 1) . ' KB';
+        
+        $kb = $sizeInBytes / 1024;
+        
+        if ($kb < 1024) {
+            return number_format($kb, 2) . ' KB';
         }
-        if ($sizeInMb >= 1024) {
-            $gb = $sizeInMb / 1024;
-            return number_format($gb, 2) . ' GB';
+        
+        $mb = $kb / 1024;
+        
+        if ($mb < 1024) {
+            return number_format($mb, 2) . ' MB';
         }
-        return number_format($sizeInMb, 2) . ' MB';
+        
+        $gb = $mb / 1024;
+        return number_format($gb, 2) . ' GB';
     }
 }

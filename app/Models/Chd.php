@@ -10,10 +10,10 @@ class Chd extends Model
 
     protected $fillable = [
         'rom',
-        'size',
+        'size_bytes',
     ];
 
     protected $casts = [
-        'size' => 'float',
+        'size_bytes' => 'integer',
     ];
 }

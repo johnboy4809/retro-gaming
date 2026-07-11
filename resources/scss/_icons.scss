@@ -1,0 +1,22 @@
+.icon-svg {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    background-color: currentColor;
+    vertical-align: middle;
+}
+
+.icon-arcade { mask-image: url('/images/retro-icon-set/Arcade.svg'); -webkit-mask-image: url('/images/retro-icon-set/Arcade.svg'); }
+.icon-console { mask-image: url('/images/retro-icon-set/Console.svg'); -webkit-mask-image: url('/images/retro-icon-set/Console.svg'); }
+.icon-donkey-kong { mask-image: url('/images/retro-icon-set/Donkey%20Kong.svg'); -webkit-mask-image: url('/images/retro-icon-set/Donkey%20Kong.svg'); }
+.icon-hand-held { mask-image: url('/images/retro-icon-set/Hand%20Held.svg'); -webkit-mask-image: url('/images/retro-icon-set/Hand%20Held.svg'); }
+.icon-home-computer { mask-image: url('/images/retro-icon-set/Home%20Computer.svg'); -webkit-mask-image: url('/images/retro-icon-set/Home%20Computer.svg'); }
+.icon-maria { mask-image: url('/images/retro-icon-set/Maria.svg'); -webkit-mask-image: url('/images/retro-icon-set/Maria.svg'); }
+.icon-sonic { mask-image: url('/images/retro-icon-set/Sonic.svg'); -webkit-mask-image: url('/images/retro-icon-set/Sonic.svg'); }
+.icon-space-invaders { mask-image: url('/images/retro-icon-set/Space%20Invaders.svg'); -webkit-mask-image: url('/images/retro-icon-set/Space%20Invaders.svg'); }

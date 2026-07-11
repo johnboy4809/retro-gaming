@@ -65,49 +65,18 @@
     <div class="w-full max-w-none px-4 sm:px-8 lg:px-12 py-6">
         
         <!-- Header -->
-        <header class="flex flex-col md:flex-row justify-between items-center mb-8 pb-6 border-b border-retro-border border-opacity-40">
-            <div class="flex items-center space-x-4 mb-4 md:mb-0">
-                <div class="p-3 bg-retro-card rounded-lg border border-retro-magenta">
-                    <i class="fa-solid fa-truck-ramp-box text-2xl text-retro-magenta"></i>
-                </div>
-                <div>
-                    <h1 class="font-arcade text-3xl font-extrabold uppercase tracking-wider text-retro-cyan">
-                        Retro Drives
-                    </h1>
-                    <p class="font-tech text-xs text-retro-cyan tracking-widest uppercase">Order Processing Backend</p>
-                </div>
-            </div>
-            
-            <div class="flex items-center space-x-3">
-                <!-- Valet Indicator -->
-                <div class="flex items-center space-x-2 bg-retro-card px-4 py-2 rounded-full border border-retro-border border-opacity-60 text-xs font-tech">
-                    <span class="h-2 w-2 rounded-full bg-retro-green animate-ping"></span>
-                    <span class="text-retro-green uppercase">Valet Active</span>
-                    <span class="text-gray-500">|</span>
-                    <span class="text-gray-400">retro-gaming.test</span>
-                </div>
-
-                <!-- Logout Button -->
-                <form action="{{ route('logout') }}" method="POST" class="inline">
-                    @csrf
-                    <button type="submit" class="px-4 py-2 bg-retro-card border border-retro-border hover:border-retro-magenta text-gray-400 hover:text-white text-xs font-tech uppercase tracking-wider rounded-full transition flex items-center space-x-1.5">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        <span>Exit Portal</span>
-                    </button>
-                </form>
-            </div>
-        </header>
+        <x-header />
 
         <!-- Top Level Device Groups -->
         <div class="flex items-center space-x-2 mb-6 border-b border-retro-border border-opacity-20 pb-4">
             <a href="{{ url('/admin?group=arcade&system=mame') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all bg-retro-card text-gray-400 hover:text-white border border-retro-border">
-                <i class="fa-solid fa-gamepad mr-1"></i> Arcade
+                <i class="icon-svg icon-arcade mr-1"></i> Arcade
             </a>
             <a href="{{ route('admin.console') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all bg-retro-card text-gray-400 hover:text-white border border-retro-border">
-                <i class="fa-solid fa-tv mr-1"></i> Console
+                <i class="icon-svg icon-console mr-1"></i> Console
             </a>
             <a href="{{ url('/admin?group=home_computer') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all bg-retro-card text-gray-400 hover:text-white border border-retro-border">
-                <i class="fa-solid fa-computer mr-1"></i> Home Computer
+                <i class="icon-svg icon-home-computer mr-1"></i> Home Computer
             </a>
             <a href="{{ route('admin.orders') }}" class="px-5 py-2.5 rounded-lg font-tech text-xs uppercase tracking-wider transition-all bg-retro-cyan text-black">
                 <i class="fa-solid fa-truck-ramp-box mr-1"></i> Customer Orders
@@ -329,8 +298,8 @@
                     const row = document.createElement('div');
                     row.className = "flex justify-between items-center p-2.5 bg-retro-bg rounded-lg border border-retro-border border-opacity-40 text-xs font-tech text-gray-300";
                     row.innerHTML = `
-                        <span class="font-bold text-white uppercase">${item.mame ? item.mame.rom : 'Unknown'}</span>
-                        <span class="text-gray-500 line-clamp-1 max-w-[300px] text-right font-sans">${item.mame ? item.mame.full_name : 'No ROM description'}</span>
+                        <span class="font-bold text-white uppercase">${item.game ? item.game.rom : 'Unknown'}</span>
+                        <span class="text-gray-500 line-clamp-1 max-w-[300px] text-right font-sans">${item.game ? (item.game.title || item.game.rom) : 'No ROM description'}</span>
                     `;
                     romsContainer.appendChild(row);
                 });

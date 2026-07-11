@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Mame;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
@@ -16,10 +15,17 @@ class CartController extends Controller
     public function index()
     {
         $cart = session()->get('cart', []);
-        $items = [];
+        $items = collect();
         
         if (!empty($cart)) {
-            $items = Mame::whereIn('id', array_keys($cart))->with('arcadeBoard')->get();
+            foreach ($cart as $key => $details) {
+                $modelClass = $details['game_type'];
+                $item = $modelClass::find($details['game_id']);
+                if ($item) {
+                    $item->cart_key = $key;
+                    $items->push($item);
+                }
+            }
         }
 
         return view('cart', compact('items'));
@@ -30,13 +36,27 @@ class CartController extends Controller
      */
     public function add(Request $request)
     {
-        $mameId = $request->input('mame_id');
-        $mame = Mame::findOrFail($mameId);
+        $request->validate([
+            'game_id' => 'required|integer',
+            'game_type' => 'required|string',
+        ]);
+
+        $gameId = $request->input('game_id');
+        $gameType = $request->input('game_type');
+        
+        if (!class_exists($gameType)) {
+            abort(400, "Invalid game type");
+        }
+
+        $game = $gameType::findOrFail($gameId);
+        $cartKey = $gameType . '_' . $gameId;
 
         $cart = session()->get('cart', []);
-        $cart[$mameId] = [
-            'rom' => $mame->rom,
-            'full_name' => $mame->full_name,
+        $cart[$cartKey] = [
+            'game_type' => $gameType,
+            'game_id' => $gameId,
+            'rom' => $game->rom,
+            'title' => $game->title ?? $game->rom,
         ];
 
         session()->put('cart', $cart);
@@ -45,11 +65,11 @@ class CartController extends Controller
             return response()->json([
                 'success' => true,
                 'count' => count($cart),
-                'message' => "{$mame->rom} added to custom drive builder."
+                'message' => "{$game->rom} added to custom drive builder."
             ]);
         }
 
-        return redirect()->back()->with('success', "ROM '{$mame->rom}' added to custom drive.");
+        return redirect()->back()->with('success', "ROM '{$game->rom}' added to custom drive.");
     }
 
     /**
@@ -57,11 +77,11 @@ class CartController extends Controller
      */
     public function remove(Request $request)
     {
-        $mameId = $request->input('mame_id');
+        $cartKey = $request->input('cart_key');
 
         $cart = session()->get('cart', []);
-        if (isset($cart[$mameId])) {
-            unset($cart[$mameId]);
+        if (isset($cart[$cartKey])) {
+            unset($cart[$cartKey]);
             session()->put('cart', $cart);
         }
 
@@ -105,10 +125,11 @@ class CartController extends Controller
 
         // Add Items
         $items = [];
-        foreach (array_keys($cart) as $mameId) {
+        foreach ($cart as $details) {
             $items[] = [
                 'order_id' => $order->id,
-                'mame_id' => $mameId,
+                'game_type' => $details['game_type'],
+                'game_id' => $details['game_id'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
@@ -118,6 +139,6 @@ class CartController extends Controller
         // Clear Cart
         session()->forget('cart');
 
-        return redirect('/')->with('success', 'Your custom drive request has been submitted successfully! We will write your drive and post it shortly.');
+        return redirect()->route('library.index')->with('success', 'Your custom drive order has been submitted successfully! We will begin processing it shortly.');
     }
 }

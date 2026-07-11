@@ -51,24 +51,17 @@
     <!-- External Retro CSS -->
     <link rel="stylesheet" href="{{ asset('css/retro.css') }}">
 </head>
-<body class="login-body font-sans antialiased min-h-screen flex items-center justify-center p-4">
+<body class="login-body font-sans antialiased min-h-screen flex flex-col">
 
     <!-- Top Neon Bar -->
     <div class="fixed top-0 left-0 w-full h-1 bg-retro-cyan"></div>
 
-    <div class="max-w-md w-full">
-        <!-- Logo Header -->
-        <div class="text-center mb-8">
-            <div class="inline-block p-4 bg-retro-card rounded-2xl border border-retro-magenta mb-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-retro-magenta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-            </div>
-            <h1 class="font-arcade text-3xl font-black uppercase tracking-wider text-retro-cyan mb-1">
-                Retro Drives
-            </h1>
-            <p class="font-tech text-xs text-retro-cyan tracking-widest uppercase">Games you want to play</p>
-        </div>
+    <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-6">
+        <x-header />
+    </div>
+
+    <div class="flex-1 flex items-center justify-center p-4">
+        <div class="max-w-md w-full">
 
         <!-- Form Card -->
         <div class="glass-card rounded-2xl border border-retro-border neon-glow-magenta p-8">
@@ -128,7 +121,7 @@
         <div class="text-center mt-8 text-gray-600 text-xs font-tech">
             Authorized admin credentials required.
         </div>
+        </div>
     </div>
-
 </body>
 </html>

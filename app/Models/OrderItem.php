@@ -8,7 +8,8 @@ class OrderItem extends Model
 {
     protected $fillable = [
         'order_id',
-        'mame_id',
+        'game_type',
+        'game_id',
     ];
 
     public function order()
@@ -16,8 +17,8 @@ class OrderItem extends Model
         return $this->belongsTo(Order::class);
     }
 
-    public function mame()
+    public function game()
     {
-        return $this->belongsTo(Mame::class);
+        return $this->morphTo();
     }
 }

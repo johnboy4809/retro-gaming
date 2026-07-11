@@ -139,7 +139,7 @@
                 Games you want to play
             </p>
             <p class="text-gray-200 text-base md:text-lg leading-relaxed mb-4 max-w-2xl mx-auto">
-                Pick the games you love from <span class="text-retro-cyan font-semibold">{{ number_format(\App\Models\Mame::count() + \App\Models\Snes::count()) }}+</span> ROMs across arcade, console and home computer platforms.
+                Pick the games you love from <span class="text-retro-cyan font-semibold">{{ number_format(\App\Models\ArcadeGame::count() + \App\Models\ConsoleGame::count()) }}+</span> ROMs across arcade, console and home computer platforms.
             </p>
             <p class="text-gray-400 text-sm leading-relaxed mb-10 max-w-2xl mx-auto">
                 We load them onto your chosen drive and post it straight to your door — plug in and play on PC, Mac or Raspberry Pi.
@@ -328,9 +328,14 @@
                         <div id="summary-text" class="font-arcade text-lg text-retro-cyan font-bold uppercase"></div>
                         <div id="summary-media" class="font-tech text-xs text-gray-400 mt-1"></div>
                     </div>
-                    <a href="{{ route('register') }}" class="flex-shrink-0 px-6 py-3 bg-retro-cyan text-black font-arcade text-xs uppercase tracking-wider rounded-xl transition hover:bg-opacity-85">
-                        Start Building →
-                    </a>
+                    <form action="{{ route('library.setup') }}" method="POST" id="setup-drive-form" class="flex-shrink-0">
+                        @csrf
+                        <input type="hidden" name="platform" id="form-platform" value="">
+                        <input type="hidden" name="size" id="form-size" value="">
+                        <button type="submit" class="w-full px-6 py-3 bg-retro-cyan text-black font-arcade text-xs uppercase tracking-wider rounded-xl transition hover:bg-opacity-85">
+                            Start Building →
+                        </button>
+                    </form>
                 </div>
             </div>
         </section>
@@ -350,9 +355,9 @@
                         </div>
                     </div>
                     <div class="mt-auto pt-4 border-t border-retro-border border-opacity-30">
-                        <div class="flex items-center space-x-2 text-xs font-tech text-gray-500">
-                            <i class="fa-solid fa-gamepad text-retro-cyan"></i>
-                            <span>{{ number_format(\App\Models\Mame::count()) }} arcade &bull; {{ number_format(\App\Models\Snes::count()) }} SNES and growing</span>
+                        <div class="flex items-center space-x-3 text-sm text-gray-400 font-tech">
+                            <i class="icon-svg icon-arcade text-retro-cyan"></i>
+                            <span>{{ number_format(\App\Models\ArcadeGame::count()) }} arcade &bull; {{ number_format(\App\Models\ConsoleGame::count()) }} SNES and growing</span>
                         </div>
                     </div>
                 </div>
@@ -398,19 +403,19 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="glass-card rounded-xl border border-retro-border p-6 text-center">
-                    <i class="fa-solid fa-gamepad text-3xl text-retro-cyan mb-3 block"></i>
-                    <div class="font-arcade text-3xl font-bold text-retro-cyan mb-1">{{ number_format(\App\Models\Mame::count()) }}</div>
+                    <i class="icon-svg icon-arcade text-3xl text-retro-cyan mb-3 block"></i>
+                    <div class="font-arcade text-3xl font-bold text-retro-cyan mb-1">{{ number_format(\App\Models\ArcadeGame::count()) }}</div>
                     <div class="font-arcade text-sm text-white uppercase tracking-wider mb-2">Arcade ROMs</div>
                     <p class="text-gray-500 text-xs font-tech">MAME &amp; FBNeo — Street Fighter, Pac-Man, Metal Slug and thousands more classics.</p>
                 </div>
                 <div class="glass-card rounded-xl border border-retro-border p-6 text-center">
-                    <i class="fa-solid fa-tv text-3xl text-retro-purple mb-3 block"></i>
-                    <div class="font-arcade text-3xl font-bold text-retro-purple mb-1">{{ number_format(\App\Models\Snes::count()) }}</div>
-                    <div class="font-arcade text-sm text-white uppercase tracking-wider mb-2">SNES ROMs</div>
-                    <p class="text-gray-500 text-xs font-tech">Super Nintendo — Mario, Zelda, Donkey Kong Country and the full golden-age library.</p>
+                    <i class="icon-svg icon-console text-3xl text-retro-purple mb-3 block"></i>
+                    <div class="font-arcade text-3xl font-bold text-retro-purple mb-1">{{ number_format(\App\Models\ConsoleGame::count()) }}</div>
+                    <div class="font-arcade text-sm text-white uppercase tracking-wider mb-2">Console Classics</div>
+                    <p class="text-gray-500 text-xs font-tech">SNES, Mega Drive, NES and all the 8/16-bit heavyweights.</p>
                 </div>
                 <div class="glass-card rounded-xl border border-retro-border p-6 text-center">
-                    <i class="fa-solid fa-computer text-3xl text-retro-yellow mb-3 block"></i>
+                    <i class="icon-svg icon-home-computer text-3xl text-retro-yellow mb-3 block"></i>
                     <div class="font-arcade text-3xl font-bold text-retro-yellow mb-1">Soon</div>
                     <div class="font-arcade text-sm text-white uppercase tracking-wider mb-2">Home Computer</div>
                     <p class="text-gray-500 text-xs font-tech">ZX Spectrum, Amstrad CPC, Commodore 64 and more — coming very soon.</p>
@@ -431,18 +436,24 @@
                         <div>
                             <div class="flex justify-between items-start mb-3">
                                 <span class="px-2 py-0.5 rounded bg-retro-card border border-retro-border text-[10px] text-gray-400 font-tech uppercase">{{ $game->rom }}</span>
+                                <a href="{{ route('library.index') }}?search={{ $game->rom }}" class="px-2 py-1 bg-retro-card border border-retro-border hover:border-retro-cyan text-xs font-tech uppercase tracking-wider text-gray-300 hover:text-retro-cyan rounded transition">
+                                    Info
+                                </a>
                                 <form action="{{ route('cart.add') }}" method="POST" class="inline">
                                     @csrf
-                                    <input type="hidden" name="mame_id" value="{{ $game->id }}">
-                                    @if(session()->has('cart') && isset(session('cart')[$game->id]))
-                                        <button type="button" class="text-retro-green text-xs font-tech flex items-center space-x-1" disabled>
-                                            <i class="fa-solid fa-circle-check"></i>
-                                            <span>Added</span>
+                                    @php
+                                        $gameClass = get_class($game);
+                                        $cartKey = $gameClass . '_' . $game->id;
+                                    @endphp
+                                    <input type="hidden" name="game_id" value="{{ $game->id }}">
+                                    <input type="hidden" name="game_type" value="{{ $gameClass }}">
+                                    @if(session()->has('cart') && isset(session('cart')[$cartKey]))
+                                        <button type="button" class="px-2 py-1 bg-retro-card border border-retro-green text-retro-green text-xs font-tech uppercase tracking-wider rounded flex items-center space-x-1" disabled>
+                                            <i class="fa-solid fa-circle-check"></i> <span>Added</span>
                                         </button>
                                     @else
-                                        <button type="submit" class="text-xs font-tech flex items-center space-x-1 bg-retro-cyan text-black px-2 py-1 rounded transition hover:bg-opacity-85">
-                                            <i class="fa-solid fa-plus text-[10px]"></i>
-                                            <span>Add</span>
+                                        <button type="submit" class="px-2 py-1 bg-retro-cyan text-black hover:bg-opacity-85 text-xs font-tech uppercase tracking-wider rounded transition flex items-center space-x-1">
+                                            <i class="fa-solid fa-plus"></i> <span>Add</span>
                                         </button>
                                     @endif
                                 </form>
@@ -456,7 +467,7 @@
                     </div>
                 @empty
                     <div class="col-span-full py-12 text-center text-gray-500 font-tech">
-                        <i class="fa-solid fa-gamepad text-3xl mb-2 block opacity-40"></i>
+                        <i class="icon-svg icon-arcade text-3xl mb-2 block opacity-40"></i>
                         No featured games loaded yet.
                     </div>
                 @endforelse
@@ -556,6 +567,10 @@
             document.getElementById('summary-text').textContent = info.label + ' — ' + s + ' GB';
             document.getElementById('summary-media').textContent = info.media + ' · ' + s + ' GB';
             document.getElementById('drive-summary').classList.remove('hidden');
+
+            // Update form inputs
+            document.getElementById('form-platform').value = selectedPlatform;
+            document.getElementById('form-size').value = selectedSize;
         }
     </script>
 

@@ -60,24 +60,9 @@
     <!-- Top Neon Bar -->
     <div class="h-1 w-full bg-retro-cyan"></div>
 
-    <!-- Navigation Header -->
-    <nav class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 border-b border-retro-border border-opacity-40 flex justify-between items-center">
-        <a href="{{ url('/') }}" class="flex items-center space-x-3 hover:opacity-85 transition">
-            <div class="p-2 bg-retro-card rounded-lg border border-retro-cyan">
-                <i class="fa-solid fa-gamepad text-xl text-retro-cyan"></i>
-            </div>
-            <div>
-                <span class="font-arcade text-xl font-black uppercase tracking-wider text-white">Retro Drives</span>
-                <span class="block text-[10px] font-tech text-retro-cyan tracking-widest uppercase">Games you want to play</span>
-            </div>
-        </a>
-        <div class="flex items-center space-x-3">
-            <a href="{{ url('/') }}" class="px-4 py-2 bg-retro-card border border-retro-border hover:border-retro-cyan text-gray-300 hover:text-white text-xs font-tech uppercase tracking-wider rounded-lg transition flex items-center space-x-1.5">
-                <i class="fa-solid fa-house text-retro-cyan"></i>
-                <span>Home Catalog</span>
-            </a>
-        </div>
-    </nav>
+    <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-6">
+        <x-header />
+    </div>
 
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex-1 py-12">
@@ -124,16 +109,18 @@
                                 <div>
                                     <div class="flex items-center space-x-3 mb-1">
                                         <span class="font-tech text-sm font-bold text-white uppercase">{{ $item->rom }}</span>
-                                        @if($item->year)
-                                            <span class="text-[10px] text-gray-500 font-tech">({{ $item->year }})</span>
+                                        @if($item->release_date)
+                                            <span class="text-[10px] text-gray-500 font-tech">({{ $item->release_date }})</span>
                                         @endif
                                     </div>
-                                    <h3 class="text-gray-300 text-sm font-semibold line-clamp-1">{{ $item->full_name }}</h3>
+                                    <h3 class="text-gray-300 text-sm font-semibold line-clamp-1">{{ $item->title }}</h3>
                                     <div class="flex items-center space-x-3 mt-1.5 text-[10px] text-gray-500">
-                                        <span>Mfg: {{ $item->manufacturer ?? 'Unknown' }}</span>
-                                        <span>•</span>
-                                        <span>HW: {{ $item->hardware ?? $item->driver ?? '----' }}</span>
-                                        @if($item->use_chds)
+                                        <span>Size: {{ formatSizeFromBytes($item->total_size_bytes ?? $item->size_bytes) }}</span>
+                                        @if($item->hardware)
+                                            <span>•</span>
+                                            <span>HW: {{ $item->hardware }}</span>
+                                        @endif
+                                        @if($item->chd)
                                             <span>•</span>
                                             <span class="text-retro-magenta uppercase font-tech">Requires CHD</span>
                                         @endif
@@ -143,7 +130,7 @@
                                 <!-- Remove form button -->
                                 <form action="{{ route('cart.remove') }}" method="POST" class="inline">
                                     @csrf
-                                    <input type="hidden" name="mame_id" value="{{ $item->id }}">
+                                    <input type="hidden" name="cart_key" value="{{ $item->cart_key }}">
                                     <button type="submit" class="p-2 bg-retro-bg hover:bg-retro-magenta hover:bg-opacity-15 border border-retro-border hover:border-retro-magenta text-gray-500 hover:text-retro-magenta rounded-lg transition" title="Remove Game">
                                         <i class="fa-solid fa-trash-can text-sm"></i>
                                     </button>

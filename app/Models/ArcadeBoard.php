@@ -10,8 +10,8 @@ class ArcadeBoard extends Model
 
     protected $fillable = ['driver', 'board'];
 
-    public function mames()
+    public function arcadeGames()
     {
-        return $this->hasMany(Mame::class, 'driver', 'driver');
+        return $this->hasMany(ArcadeGame::class, 'driver', 'driver');
     }
 }
