@@ -62,6 +62,44 @@ abstract class BaseGameController extends Controller
         return view('admin.games.index', compact('subPlatform', 'games', 'stats', 'hardwareBoards', 'routePrefix', 'system'));
     }
 
+    public function store(Request $request, $subPlatformId)
+    {
+        $request->validate([
+            'rom' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255',
+            'release_date' => 'nullable|date',
+            'size_bytes' => 'nullable|integer',
+            'region' => 'nullable|string|max:255',
+            'crc32' => 'nullable|string|max:255'
+        ]);
+
+        $subPlatform = SubPlatform::findOrFail($subPlatformId);
+        $modelClass = $this->getModelClass();
+
+        $exists = $modelClass::where('sub_platform_id', $subPlatformId)
+                             ->where('rom', $request->rom)
+                             ->exists();
+        
+        if ($exists) {
+            return redirect()->back()->withErrors("A game with the ROM '{$request->rom}' already exists.");
+        }
+
+        $gameData = [
+            'sub_platform_id' => $subPlatform->id,
+            'rom' => $request->rom,
+            'title' => $request->title ?: $request->rom,
+            'size_bytes' => $request->size_bytes ?: 0,
+            'release_date' => $request->release_date ? \Carbon\Carbon::parse($request->release_date)->format('Y-m-d') : null,
+            'region' => $request->region,
+            'crc32' => $request->crc32,
+            'metadata' => []
+        ];
+
+        $modelClass::create($gameData);
+
+        return redirect()->back()->with('success', 'Game added successfully.');
+    }
+
     public function update(Request $request, $subPlatformId, $gameId)
     {
         $subPlatform = SubPlatform::findOrFail($subPlatformId);

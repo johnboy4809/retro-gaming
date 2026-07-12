@@ -86,8 +86,12 @@
                 </h1>
             </div>
             
-            <div class="flex space-x-4">
-                <a href="{{ route('admin.games.csv-template') }}" class="px-4 py-2 bg-retro-card hover:bg-opacity-80 text-retro-cyan border border-retro-cyan font-tech uppercase tracking-wider rounded-lg transition flex items-center space-x-2 text-sm shadow-[0_0_10px_rgba(0,255,255,0.2)]">
+            <div class="flex space-x-4 items-start">
+                <button onclick="document.getElementById('add-game-modal').classList.remove('hidden')" class="px-4 py-2 bg-retro-cyan hover:bg-opacity-85 text-black font-tech uppercase tracking-wider rounded-lg transition flex items-center space-x-2 font-bold mt-1 shadow-[0_0_10px_rgba(0,243,255,0.4)]">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Add Game</span>
+                </button>
+                <a href="{{ route('admin.games.csv-template') }}" class="px-4 py-2 bg-retro-card hover:bg-opacity-80 text-retro-cyan border border-retro-cyan font-tech uppercase tracking-wider rounded-lg transition flex items-center space-x-2 text-sm shadow-[0_0_10px_rgba(0,255,255,0.2)] mt-1">
                     <i class="fa-solid fa-download"></i>
                     <span>Template</span>
                 </a>
@@ -394,6 +398,61 @@
                 </div>
             </div>
         </main>
+
+        <!-- Add Game Modal -->
+        <div id="add-game-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-retro-card border border-retro-border rounded-2xl shadow-[0_0_40px_rgba(0,243,255,0.15)] w-full max-w-xl overflow-hidden">
+                <div class="bg-retro-bg px-6 py-4 border-b border-retro-border flex justify-between items-center">
+                    <div>
+                        <span class="text-xs font-tech text-retro-cyan uppercase tracking-widest">New Entry</span>
+                        <h3 class="font-arcade text-xl font-extrabold text-white uppercase tracking-wider">Add Game</h3>
+                    </div>
+                    <button type="button" onclick="document.getElementById('add-game-modal').classList.add('hidden')" class="text-gray-400 hover:text-white transition">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <form action="{{ route($routePrefix . '.games.store', $subPlatform->id) }}" method="POST" class="p-6">
+                    @csrf
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">ROM Name (Required)</label>
+                            <input type="text" name="rom" required class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan focus:outline-none text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Title</label>
+                            <input type="text" name="title" class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan focus:outline-none text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Release Date</label>
+                            <input type="date" name="release_date" class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan focus:outline-none text-white text-sm font-tech" style="color-scheme: dark;">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Size (Bytes)</label>
+                            <input type="number" step="1" name="size_bytes" class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan focus:outline-none text-white text-sm font-tech">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Region</label>
+                            <input type="text" name="region" class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan focus:outline-none text-white text-sm font-tech">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">CRC32</label>
+                            <input type="text" name="crc32" class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan focus:outline-none text-white text-sm font-tech">
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex justify-end space-x-3">
+                        <button type="button" onclick="document.getElementById('add-game-modal').classList.add('hidden')" class="px-4 py-2 bg-retro-card border border-retro-border hover:border-white text-white font-tech text-sm uppercase tracking-wider rounded-lg transition">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-retro-cyan hover:bg-opacity-85 text-black font-tech text-sm uppercase tracking-wider rounded-lg transition font-bold shadow-[0_0_15px_rgba(0,243,255,0.4)] flex items-center space-x-2">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Create Game</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <script>
             document.addEventListener('alpine:init', () => {

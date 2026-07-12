@@ -68,24 +68,28 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     // Generic Game Routes
     Route::get('arcade/{subPlatform}/games', [App\Http\Controllers\ArcadeGameController::class, 'index'])->name('arcade.games.index');
+    Route::post('arcade/{subPlatform}/games', [App\Http\Controllers\ArcadeGameController::class, 'store'])->name('arcade.games.store');
     Route::post('arcade/{subPlatform}/games/import', [App\Http\Controllers\ArcadeGameController::class, 'import'])->name('arcade.games.import');
     Route::put('arcade/{subPlatform}/games/{game}', [App\Http\Controllers\ArcadeGameController::class, 'update'])->name('arcade.games.update');
     Route::post('arcade/{subPlatform}/games/bulk-destroy', [App\Http\Controllers\ArcadeGameController::class, 'bulkDestroy'])->name('arcade.games.bulk-destroy');
     Route::delete('arcade/{subPlatform}/games/{game}', [App\Http\Controllers\ArcadeGameController::class, 'destroy'])->name('arcade.games.destroy');
 
     Route::get('console/{subPlatform}/games', [App\Http\Controllers\ConsoleGameController::class, 'index'])->name('console.games.index');
+    Route::post('console/{subPlatform}/games', [App\Http\Controllers\ConsoleGameController::class, 'store'])->name('console.games.store');
     Route::post('console/{subPlatform}/games/import', [App\Http\Controllers\ConsoleGameController::class, 'import'])->name('console.games.import');
     Route::put('console/{subPlatform}/games/{game}', [App\Http\Controllers\ConsoleGameController::class, 'update'])->name('console.games.update');
     Route::post('console/{subPlatform}/games/bulk-destroy', [App\Http\Controllers\ConsoleGameController::class, 'bulkDestroy'])->name('console.games.bulk-destroy');
     Route::delete('console/{subPlatform}/games/{game}', [App\Http\Controllers\ConsoleGameController::class, 'destroy'])->name('console.games.destroy');
 
     Route::get('handheld/{subPlatform}/games', [App\Http\Controllers\HandheldGameController::class, 'index'])->name('handheld.games.index');
+    Route::post('handheld/{subPlatform}/games', [App\Http\Controllers\HandheldGameController::class, 'store'])->name('handheld.games.store');
     Route::post('handheld/{subPlatform}/games/import', [App\Http\Controllers\HandheldGameController::class, 'import'])->name('handheld.games.import');
     Route::put('handheld/{subPlatform}/games/{game}', [App\Http\Controllers\HandheldGameController::class, 'update'])->name('handheld.games.update');
     Route::post('handheld/{subPlatform}/games/bulk-destroy', [App\Http\Controllers\HandheldGameController::class, 'bulkDestroy'])->name('handheld.games.bulk-destroy');
     Route::delete('handheld/{subPlatform}/games/{game}', [App\Http\Controllers\HandheldGameController::class, 'destroy'])->name('handheld.games.destroy');
 
     Route::get('computer/{subPlatform}/games', [App\Http\Controllers\ComputerGameController::class, 'index'])->name('computer.games.index');
+    Route::post('computer/{subPlatform}/games', [App\Http\Controllers\ComputerGameController::class, 'store'])->name('computer.games.store');
     Route::post('computer/{subPlatform}/games/import', [App\Http\Controllers\ComputerGameController::class, 'import'])->name('computer.games.import');
     Route::put('computer/{subPlatform}/games/{game}', [App\Http\Controllers\ComputerGameController::class, 'update'])->name('computer.games.update');
     Route::post('computer/{subPlatform}/games/bulk-destroy', [App\Http\Controllers\ComputerGameController::class, 'bulkDestroy'])->name('computer.games.bulk-destroy');
