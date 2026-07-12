@@ -211,129 +211,130 @@
         @else
 
         <!-- Filters and Search -->
-        <section class="glass-card p-6 rounded-xl border border-retro-border border-opacity-60 shadow-xl mb-8">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2 pb-3 border-b border-retro-border border-opacity-20">
-                <h2 class="font-arcade text-lg font-bold text-white flex items-center space-x-2">
-                    <i class="fa-solid fa-sliders text-retro-cyan"></i>
-                    <span>Filter Catalog & Search</span>
-                </h2>
-            </div>
-            
-            <form action="{{ url('/library') }}" method="GET" class="space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+            <form action="{{ url('/library') }}" method="GET" class="w-full sm:w-1/2 relative flex items-center">
                 <input type="hidden" name="group" value="{{ $group }}">
                 <input type="hidden" name="system" value="{{ $system }}">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- Search Input -->
-                    <div class="md:col-span-2 relative">
-                        <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Search Keywords</label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
-                            </span>
-                            <input type="text" name="search" value="{{ request('search') }}" 
-                                   placeholder="{{ $system === 'chd' ? 'Search ROM name...' : 'Search ROM, full name, manufacturer, driver...' }}" 
-                                   class="w-full pl-10 pr-4 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan focus:outline-none text-white text-sm placeholder-gray-500 font-sans transition">
-                        </div>
-                    </div>
+                @if(request()->has('sort_by'))
+                    <input type="hidden" name="sort_by" value="{{ request('sort_by') }}">
+                    <input type="hidden" name="sort_order" value="{{ request('sort_order') }}">
+                @endif
+                @if(request()->has('manufacturer')) <input type="hidden" name="manufacturer" value="{{ request('manufacturer') }}"> @endif
+                @if(request()->has('year')) <input type="hidden" name="year" value="{{ request('year') }}"> @endif
+                @if(request()->has('region')) <input type="hidden" name="region" value="{{ request('region') }}"> @endif
+                @if(request()->has('hardware_board')) <input type="hidden" name="hardware_board" value="{{ request('hardware_board') }}"> @endif
+                
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
+                </span>
+                <input type="text" name="search" value="{{ request('search') }}" 
+                       placeholder="{{ $system === 'chd' ? 'Search ROM name...' : 'Search ROM, full name, manufacturer, driver...' }}" 
+                       class="w-full pl-10 pr-4 py-2 bg-retro-bg rounded-l-lg border border-retro-border focus:border-retro-cyan focus:outline-none text-white text-sm placeholder-gray-500 font-sans transition">
+                <button type="submit" class="px-4 py-2 bg-retro-cyan hover:bg-opacity-85 text-black font-tech font-bold uppercase tracking-wider rounded-r-lg border border-retro-cyan transition">
+                    Search
+                </button>
+            </form>
+            
+            <div class="flex items-center space-x-2">
+                @if(request()->has('search') || request()->has('sort_by') || request()->has('manufacturer') || request()->has('year') || request()->has('region') || request()->has('hardware_board'))
+                    <a href="{{ url('/library?group=' . $group . '&system=' . request('system', 'mame')) }}" class="px-4 py-2 bg-retro-card hover:bg-opacity-80 text-gray-400 hover:text-white font-tech text-xs uppercase tracking-wider rounded-lg border border-retro-border transition flex items-center space-x-2">
+                        <i class="fa-solid fa-rotate-left"></i> <span>Reset</span>
+                    </a>
+                @endif
+                <button type="button" onclick="document.getElementById('filter-modal').classList.remove('hidden')" class="px-4 py-2 bg-retro-purple hover:bg-opacity-80 text-white font-tech text-sm uppercase tracking-wider rounded-lg border border-retro-purple transition flex items-center space-x-2 shadow-[0_0_10px_rgba(157,78,221,0.3)]">
+                    <i class="fa-solid fa-filter"></i>
+                    <span>Filters</span>
+                </button>
+            </div>
+        </div>
 
-                    <!-- Sorting -->
-                    <div>
-                        <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Sort By</label>
-                        <div class="grid grid-cols-2 gap-2">
-                            <select name="sort_by" class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan text-white text-sm">
-                                @if($system === 'chd')
-                                    <option value="rom" {{ request('sort_by') === 'rom' ? 'selected' : '' }}>ROM</option>
-                                    <option value="size" {{ request('sort_by') === 'size' ? 'selected' : '' }}>Size</option>
-                                @else
-                                    <option value="full_name" {{ request('sort_by') === 'full_name' ? 'selected' : '' }}>Full Name</option>
-                                    <option value="rom" {{ request('sort_by') === 'rom' ? 'selected' : '' }}>ROM</option>
-                                    <option value="year" {{ request('sort_by') === 'year' ? 'selected' : '' }}>Year</option>
-                                    <option value="manufacturer" {{ request('sort_by') === 'manufacturer' ? 'selected' : '' }}>Manufacturer</option>
-                                    <option value="hardware_board" {{ request('sort_by') === 'hardware_board' ? 'selected' : '' }}>Hardware Board</option>
+        <!-- Filter Modal -->
+        <div id="filter-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 transition-opacity">
+            <div class="glass-card rounded-2xl border border-retro-border border-opacity-50 overflow-hidden shadow-2xl p-8 w-full max-w-2xl relative max-h-[90vh] overflow-y-auto">
+                <button type="button" onclick="document.getElementById('filter-modal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-500 hover:text-white transition">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+                <h2 class="font-arcade text-xl font-bold text-white mb-6 border-b border-retro-border pb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-filter text-retro-purple"></i>
+                    <span>Advanced Filters</span>
+                </h2>
+                
+                <form action="{{ url('/library') }}" method="GET" class="space-y-6">
+                    <input type="hidden" name="group" value="{{ $group }}">
+                    <input type="hidden" name="system" value="{{ $system }}">
+                    @if(request()->has('search')) <input type="hidden" name="search" value="{{ request('search') }}"> @endif
+                    @if(request()->has('sort_by'))
+                        <input type="hidden" name="sort_by" value="{{ request('sort_by') }}">
+                        <input type="hidden" name="sort_order" value="{{ request('sort_order') }}">
+                    @endif
+
+                    @if($system !== 'chd')
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Manufacturer Filter -->
+                        <div>
+                            <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-2">Manufacturer</label>
+                            <select name="manufacturer" class="w-full px-4 py-3 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan text-white text-sm">
+                                <option value="">Any Manufacturer</option>
+                                @foreach($manufacturers as $mfg)
+                                    <option value="{{ $mfg }}" {{ request('manufacturer') === $mfg ? 'selected' : '' }}>{{ $mfg }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- By Decade Filter -->
+                        <div>
+                            <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-2">By Decade</label>
+                            <select name="year" class="w-full px-4 py-3 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan text-white text-sm">
+                                <option value="">Any Decade</option>
+                                @for($year = 1970; $year <= 2000; $year += 10)
+                                    <option value="{{ $year }}s" {{ request('year') === $year . 's' ? 'selected' : '' }}>{{ $year }}s</option>
+                                @endfor
+                            </select>
+                        </div>
+
+                        <!-- Region Filter -->
+                        <div>
+                            <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-2">Region</label>
+                            <select name="region" class="w-full px-4 py-3 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan text-white text-sm">
+                                <option value="">Any Region</option>
+                                @if(isset($regions))
+                                    @foreach($regions as $reg)
+                                        <option value="{{ $reg }}" {{ request('region') === $reg ? 'selected' : '' }}>{{ $reg }}</option>
+                                    @endforeach
                                 @endif
                             </select>
-                            <select name="sort_order" class="w-full px-3 py-2 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan text-white text-sm">
-                                <option value="asc" {{ request('sort_order') === 'asc' ? 'selected' : '' }}>ASC</option>
-                                <option value="desc" {{ request('sort_order') === 'desc' ? 'selected' : '' }}>DESC</option>
+                        </div>
+
+                        <!-- Hardware Board Filter -->
+                        <div>
+                            <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-2">Hardware Board</label>
+                            <select name="hardware_board" class="w-full px-4 py-3 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan text-white text-sm select-custom">
+                                <option value="">All Boards</option>
+                                @foreach($hardwareBoards as $board)
+                                    <option value="{{ $board->id }}" {{ request('hardware_board') == $board->id ? 'selected' : '' }}>
+                                        {{ $board->board }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
-                </div>
-
-                @if($system !== 'chd')
-                <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 gap-4 pt-2">
-                                        <!-- Manufacturer Filter -->
-                    <div>
-                        <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Manufacturer</label>
-                        <select name="manufacturer" class="w-full px-3 py-1.5 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan text-white text-xs">
-                            <option value="">Any</option>
-                            @foreach($manufacturers as $mfg)
-                                <option value="{{ $mfg }}" {{ request('manufacturer') === $mfg ? 'selected' : '' }}>{{ $mfg }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <!-- By Decade Filter -->
-                    <div>
-                        <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">By Decade</label>
-                        <select name="year" class="w-full px-3 py-1.5 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan text-white text-xs">
-                            <option value="">Any</option>
-                            @for($year = 1970; $year <= 2000; $year += 10)
-                                <option value="{{ $year }}s" {{ request('year') === $year . 's' ? 'selected' : '' }}>{{ $year }}s</option>
-                            @endfor
-                        </select>
-                    </div>
-
-                    <!-- Region Filter -->
-                    <div>
-                        <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Region</label>
-                        <select name="region" class="w-full px-3 py-1.5 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan text-white text-xs">
-                            <option value="">Any</option>
-                            @if(isset($regions))
-                                @foreach($regions as $reg)
-                                    <option value="{{ $reg }}" {{ request('region') === $reg ? 'selected' : '' }}>{{ $reg }}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
-
-                    <!-- Hardware Board Filter -->
-                    <div>
-                        <label class="block text-xs font-tech text-gray-400 uppercase tracking-wider mb-1">Hardware Board</label>
-                        <select name="hardware_board" class="w-full px-3 py-1.5 bg-retro-bg rounded-lg border border-retro-border focus:border-retro-cyan text-white text-xs select-custom">
-                            <option value="">All Boards</option>
-                            @foreach($hardwareBoards as $board)
-                                <option value="{{ $board->id }}" {{ request('hardware_board') == $board->id ? 'selected' : '' }}>
-                                    {{ $board->board }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <!-- Actions -->
-                    <div class="flex items-end space-x-2">
-                        <button type="submit" class="flex-1 px-4 py-2 bg-retro-cyan hover:bg-opacity-85 rounded-lg text-black font-tech text-xs uppercase tracking-wider transition">
-                            Apply
+                    @else
+                        <div class="text-gray-400 font-tech text-sm mb-6 text-center italic">
+                            No advanced filters available for CHDs.
+                        </div>
+                    @endif
+                    
+                    <div class="flex justify-end pt-6 border-t border-retro-border space-x-3 mt-8">
+                        <button type="button" onclick="document.getElementById('filter-modal').classList.add('hidden')" class="px-6 py-2 bg-retro-card hover:bg-opacity-80 text-white font-tech uppercase tracking-wider rounded-lg border border-retro-border transition">
+                            Cancel
                         </button>
-                        <a href="{{ url('/library?group=' . $group . '&system=' . request('system', 'mame')) }}" class="px-3 py-2 bg-retro-card hover:bg-opacity-80 rounded-lg border border-retro-border text-gray-400 hover:text-white text-xs transition flex items-center justify-center" title="Reset Filters">
-                            <i class="fa-solid fa-rotate-left"></i>
-                        </a>
-                    </div>
-                </div>
-                @else
-                <div class="flex justify-end pt-2">
-                    <div class="flex items-center space-x-2 w-full sm:w-auto">
-                        <button type="submit" class="px-6 py-2 bg-retro-cyan hover:bg-opacity-85 rounded-lg text-black font-tech text-xs uppercase tracking-wider transition font-bold">
-                            Apply
+                        <button type="submit" class="px-6 py-2 bg-retro-purple hover:bg-opacity-80 text-white font-tech font-bold uppercase tracking-wider rounded-lg border border-retro-purple transition flex items-center space-x-2">
+                            <i class="fa-solid fa-check"></i> <span>Apply Filters</span>
                         </button>
-                        <a href="{{ url('/library?group=' . $group . '&system=chd') }}" class="px-3 py-2 bg-retro-card hover:bg-opacity-80 rounded-lg border border-retro-border text-gray-400 hover:text-white text-xs transition flex items-center justify-center" title="Reset Filters">
-                            <i class="fa-solid fa-rotate-left"></i>
-                        </a>
                     </div>
-                </div>
-                @endif
-            </form>
-        </section>
+                </form>
+            </div>
+        </div>
 
         <!-- ROM Table -->
         <main class="glass-card rounded-xl border border-retro-border border-opacity-60 shadow-2xl overflow-hidden mb-6">
@@ -341,24 +342,67 @@
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
+                        @php
+                            $currentSort = request('sort_by');
+                            $currentOrder = request('sort_order', 'asc');
+                            
+                            $buildSortUrl = function($column) use ($currentSort, $currentOrder) {
+                                $order = ($currentSort === $column && $currentOrder === 'asc') ? 'desc' : 'asc';
+                                return request()->fullUrlWithQuery(['sort_by' => $column, 'sort_order' => $order]);
+                            };
+                            
+                            $sortIcon = function($column) use ($currentSort, $currentOrder) {
+                                if ($currentSort !== $column) return '<i class="fa-solid fa-sort text-gray-600 ml-1"></i>';
+                                return $currentOrder === 'asc' 
+                                    ? '<i class="fa-solid fa-sort-up text-retro-cyan ml-1"></i>' 
+                                    : '<i class="fa-solid fa-sort-down text-retro-cyan ml-1"></i>';
+                            };
+                        @endphp
                         <tr class="border-b border-retro-border bg-retro-card bg-opacity-70 text-xs font-tech text-retro-cyan uppercase tracking-wider">
                             @if($system === 'chd')
-                                <th class="py-4 px-6">ROM</th>
-                                <th class="py-4 px-4 text-center">Size</th>
+                                <th class="py-4 px-6 hover:text-white transition cursor-pointer">
+                                    <a href="{{ $buildSortUrl('rom') }}" class="flex items-center">ROM {!! $sortIcon('rom') !!}</a>
+                                </th>
+                                <th class="py-4 px-4 text-center hover:text-white transition cursor-pointer">
+                                    <a href="{{ $buildSortUrl('size') }}" class="flex items-center justify-center">Size {!! $sortIcon('size') !!}</a>
+                                </th>
                                 <th class="py-4 px-6 text-right">Actions</th>
                             @elseif(!in_array($system, ['mame', 'fbneo', 'chd']))
-                                <th class="py-4 px-6">ROM</th>
-                                <th class="py-4 px-4">Title</th>
-                                <th class="py-4 px-4">Release Date</th>
-                                <th class="py-4 px-4 text-center">Size</th>
+                                <th class="py-4 px-6 hover:text-white transition cursor-pointer">
+                                    <a href="{{ $buildSortUrl('rom') }}" class="flex items-center">ROM {!! $sortIcon('rom') !!}</a>
+                                </th>
+                                <th class="py-4 px-4 hover:text-white transition cursor-pointer">
+                                    <a href="{{ $buildSortUrl('title') }}" class="flex items-center">Title {!! $sortIcon('title') !!}</a>
+                                </th>
+                                <th class="py-4 px-4 hover:text-white transition cursor-pointer">
+                                    <a href="{{ $buildSortUrl('release_date') }}" class="flex items-center">Release Date {!! $sortIcon('release_date') !!}</a>
+                                </th>
+                                <th class="py-4 px-4 hover:text-white transition cursor-pointer">
+                                    <a href="{{ $buildSortUrl('region') }}" class="flex items-center">Region {!! $sortIcon('region') !!}</a>
+                                </th>
+                                <th class="py-4 px-4 text-center hover:text-white transition cursor-pointer">
+                                    <a href="{{ $buildSortUrl('size_bytes') }}" class="flex items-center justify-center">Size {!! $sortIcon('size_bytes') !!}</a>
+                                </th>
                                 <th class="py-4 px-6 text-right">Actions</th>
                             @else
-                                <th class="py-4 px-6">ROM</th>
-                                <th class="py-4 px-4">Full Name</th>
-                                <th class="py-4 px-4">Year</th>
-                                <th class="py-4 px-4">Manufacturer</th>
-                                <th class="py-4 px-4">Hardware</th>
-                                <th class="py-4 px-4 text-center">Size</th>
+                                <th class="py-4 px-6 hover:text-white transition cursor-pointer">
+                                    <a href="{{ $buildSortUrl('rom') }}" class="flex items-center">ROM {!! $sortIcon('rom') !!}</a>
+                                </th>
+                                <th class="py-4 px-4 hover:text-white transition cursor-pointer">
+                                    <a href="{{ $buildSortUrl('full_name') }}" class="flex items-center">Full Name {!! $sortIcon('full_name') !!}</a>
+                                </th>
+                                <th class="py-4 px-4 hover:text-white transition cursor-pointer">
+                                    <a href="{{ $buildSortUrl('year') }}" class="flex items-center">Year {!! $sortIcon('year') !!}</a>
+                                </th>
+                                <th class="py-4 px-4 hover:text-white transition cursor-pointer">
+                                    <a href="{{ $buildSortUrl('manufacturer') }}" class="flex items-center">Manufacturer {!! $sortIcon('manufacturer') !!}</a>
+                                </th>
+                                <th class="py-4 px-4 hover:text-white transition cursor-pointer">
+                                    <a href="{{ $buildSortUrl('hardware_board') }}" class="flex items-center">Hardware {!! $sortIcon('hardware_board') !!}</a>
+                                </th>
+                                <th class="py-4 px-4 text-center hover:text-white transition cursor-pointer">
+                                    <a href="{{ $buildSortUrl('size_bytes') }}" class="flex items-center justify-center">Size {!! $sortIcon('size_bytes') !!}</a>
+                                </th>
                                 <th class="py-4 px-6 text-right">Actions</th>
                             @endif
                         </tr>
@@ -367,7 +411,7 @@
                         @forelse($mames as $mame)
                             <tr class="hover:bg-retro-card hover:bg-opacity-40 transition group">
                                 @if($system === 'chd')
-                                    <td class="py-4 px-6 font-tech font-bold text-white tracking-wide">
+                                    <td class="py-4 px-6 font-sans font-bold text-white">
                                         <span class="group-hover:text-retro-cyan transition-colors">{{ $mame->rom }}</span>
                                     </td>
                                     <td class="py-4 px-4 text-center font-tech text-gray-400">
@@ -398,7 +442,7 @@
                                         </form>
                                     </td>
                                 @elseif(!in_array($system, ['mame', 'fbneo', 'chd']))
-                                    <td class="py-4 px-6 font-tech font-bold text-white tracking-wide flex items-center space-x-2">
+                                    <td class="py-4 px-6 font-sans font-bold text-white flex items-center space-x-2">
                                         <span class="group-hover:text-retro-cyan transition-colors">{{ $mame->rom }}</span>
                                     </td>
                                     <td class="py-4 px-4 text-gray-300">
@@ -415,6 +459,7 @@
                                         @endif
                                     </td>
                                     <td class="py-4 px-4 text-gray-400 font-tech">{{ $mame->release_date ? \Carbon\Carbon::parse($mame->release_date)->format('Y') : 'N/A' }}</td>
+                                    <td class="py-4 px-4 text-gray-400 font-sans">{{ $mame->region ?? '-' }}</td>
                                     <td class="py-4 px-4 text-center font-tech text-gray-400">
                                         {{ formatSizeFromBytes($mame->size_bytes) }}
                                     </td>
@@ -439,7 +484,7 @@
                                         </form>
                                     </td>
                                 @else
-                                    <td class="py-4 px-6 font-tech font-bold text-white tracking-wide flex items-center space-x-2">
+                                    <td class="py-4 px-6 font-sans font-bold text-white flex items-center space-x-2">
                                         <span class="group-hover:text-retro-cyan transition-colors">{{ $mame->rom }}</span>
                                     </td>
                                     <td class="py-4 px-4 max-w-xs truncate font-sans text-gray-200">
@@ -887,5 +932,6 @@
 
     <x-arcade-italia-modal apiRoutePrefix="/library" />
     <x-screenscraper-modal apiRoutePrefix="/library" systemId="{{ $activeSubPlatform->screenscraper_id ?? 4 }}" />
+    @include('components.loading-modal')
 </body>
 </html>

@@ -95,7 +95,7 @@ class ChdController extends Controller
 
         $header = array_map(function($h) { 
             $h = trim(strtolower($h)); 
-            if ($h === 'size') return 'size_bytes';
+            if ($h === 'size' || $h === 'size_mb') return 'size_bytes';
             return $h;
         }, $header);
         
@@ -108,10 +108,15 @@ class ChdController extends Controller
             
             if (empty($data['rom'])) continue;
 
-            Chd::updateOrCreate(
-                ['rom' => $data['rom']],
-                ['size_bytes' => isset($data['size_bytes']) ? (int) $data['size_bytes'] : 0]
-            );
+            $exists = Chd::where('rom', $data['rom'])->exists();
+            if ($exists) {
+                continue;
+            }
+
+            Chd::create([
+                'rom' => $data['rom'],
+                'size_bytes' => isset($data['size_bytes']) ? (int) $data['size_bytes'] : 0
+            ]);
 
             $importedCount++;
         }
@@ -138,5 +143,17 @@ class ChdController extends Controller
             "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
             "Expires"             => "0"
         ]);
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer'
+        ]);
+
+        $deletedCount = Chd::whereIn('id', $request->ids)->delete();
+
+        return redirect()->back()->with('success', "Successfully deleted {$deletedCount} CHDs.");
     }
 }

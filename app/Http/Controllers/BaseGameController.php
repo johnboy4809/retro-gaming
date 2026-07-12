@@ -132,12 +132,25 @@ abstract class BaseGameController extends Controller
         // Normalize headers
         $header = array_map(function($h) { 
             $h = trim(strtolower($h));
-            // Map common alternatives for "rom" to "rom" if they are the first column or standard
-            if (in_array($h, ['name', 'file', 'game', 'rom name', 'filename', 'game name'])) {
+            
+            // Map common alternatives for "rom"
+            if (in_array($h, ['file', 'rom name', 'filename', 'game name'])) {
                 return 'rom';
             }
-            if ($h === 'size (mb)' || $h === 'size' || $h === 'size (bytes)' || $h === 'size_mb') return 'size_bytes';
-            if ($h === 'release date' || $h === 'year') return 'release_date';
+            
+            // Map common alternatives for "title"
+            if (in_array($h, ['name', 'game', 'game title', 'alternate name'])) {
+                return 'title';
+            }
+            
+            if (in_array($h, ['size (mb)', 'size', 'size (bytes)', 'size_mb'])) {
+                return 'size_bytes';
+            }
+            
+            if (in_array($h, ['release date', 'year', 'release'])) {
+                return 'release_date';
+            }
+            
             return $h;
         }, $header);
         
@@ -165,7 +178,9 @@ abstract class BaseGameController extends Controller
             
             // Format release_date to valid Y-m-d format for database
             $releaseDate = $data['release_date'] ?? null;
-            if ($releaseDate) {
+            if (empty(trim((string)$releaseDate))) {
+                $releaseDate = null;
+            } else {
                 try {
                     $releaseDate = \Carbon\Carbon::parse($releaseDate)->format('Y-m-d');
                 } catch (\Exception $e) {
@@ -176,18 +191,24 @@ abstract class BaseGameController extends Controller
             $gameData = [
                 'sub_platform_id' => $subPlatform->id,
                 'rom' => $data['rom'],
-                'title' => $data['title'] ?? null,
+                'title' => !empty(trim((string)($data['title'] ?? ''))) ? $data['title'] : $data['rom'],
                 'size_bytes' => isset($data['size_bytes']) ? (int) $data['size_bytes'] : 0,
                 'release_date' => $releaseDate,
                 'region' => $data['region'] ?? null,
                 'crc32' => $data['crc32'] ?? null,
                 'metadata' => $metadata
             ];
+            $exists = $modelClass::where('sub_platform_id', $subPlatform->id)
+                                 ->where('rom', $data['rom'])
+                                 ->exists();
+            
+            if ($exists) {
+                $skippedCount++;
+                continue;
+            }
+
             // Metadata is already handled above and stored directly in $gameData['metadata']
-            $modelClass::updateOrCreate(
-                ['sub_platform_id' => $subPlatform->id, 'rom' => $data['rom']],
-                $gameData
-            );
+            $modelClass::create($gameData);
             
             $importedCount++;
         }
@@ -208,5 +229,23 @@ abstract class BaseGameController extends Controller
         
         return redirect()->back()
             ->with('success', 'Game deleted successfully.');
+    }
+
+    public function bulkDestroy(Request $request, $subPlatformId)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer'
+        ]);
+
+        $modelClass = $this->getModelClass();
+        
+        // We delete only those that belong to the current subPlatform just to be safe
+        $deletedCount = $modelClass::where('sub_platform_id', $subPlatformId)
+                                   ->whereIn('id', $request->ids)
+                                   ->delete();
+
+        return redirect()->back()
+            ->with('success', "Successfully deleted {$deletedCount} games.");
     }
 }

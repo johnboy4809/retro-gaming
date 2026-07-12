@@ -87,6 +87,7 @@
                             <th scope="col" class="px-6 py-4">Order</th>
                             <th scope="col" class="px-6 py-4">Sub-Platform</th>
                             <th scope="col" class="px-6 py-4">Slug</th>
+                            <th scope="col" class="px-6 py-4">ROMs</th>
                             <th scope="col" class="px-6 py-4">Status</th>
                             <th scope="col" class="px-6 py-4 text-right">Actions</th>
                         </tr>
@@ -97,6 +98,7 @@
                                 <td class="px-6 py-4">{{ $subPlatform->order_index }}</td>
                                 <td class="px-6 py-4 font-bold text-white">{{ $subPlatform->name }}</td>
                                 <td class="px-6 py-4">{{ $subPlatform->slug }}</td>
+                                <td class="px-6 py-4 font-tech text-retro-cyan font-bold">{{ $subPlatform->rom_count }}</td>
                                 <td class="px-6 py-4">
                                     @if($subPlatform->is_active)
                                         <span class="px-2 py-1 bg-retro-green bg-opacity-20 text-retro-green rounded text-xs border border-retro-green border-opacity-30">Active</span>

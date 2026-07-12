@@ -167,13 +167,15 @@
     function fetchArcadeItalia(rom) {
         document.getElementById('adb-rom-title').innerText = rom;
         
-        // Show loading, hide others
-        document.getElementById('adb-loading').classList.remove('hidden');
+        // Reset state
         document.getElementById('adb-error').classList.add('hidden');
         document.getElementById('adb-content').classList.add('hidden');
+        document.getElementById('adb-modal').classList.add('hidden');
         
-        document.getElementById('adb-modal').classList.remove('hidden');
-        document.body.classList.add('overflow-hidden');
+        // Show global loading modal
+        if (typeof window.showRetroLoading === 'function') {
+            window.showRetroLoading('Fetching Data...');
+        }
         
         fetch(`{{ $apiRoutePrefix }}/arcade-italia/${rom}`)
             .then(response => {
@@ -183,7 +185,11 @@
                 return response.json();
             })
             .then(data => {
-                document.getElementById('adb-loading').classList.add('hidden');
+                if (typeof window.hideRetroLoading === 'function') {
+                    window.hideRetroLoading();
+                }
+                document.getElementById('adb-modal').classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
                 document.getElementById('adb-content').classList.remove('hidden');
                 
                 // ADB scraper response has the game info inside 'result' or root
@@ -234,7 +240,11 @@
                 }
             })
             .catch(error => {
-                document.getElementById('adb-loading').classList.add('hidden');
+                if (typeof window.hideRetroLoading === 'function') {
+                    window.hideRetroLoading();
+                }
+                document.getElementById('adb-modal').classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
                 document.getElementById('adb-error').classList.remove('hidden');
                 document.getElementById('adb-error-message').innerText = error.message;
             });

@@ -103,13 +103,15 @@
     function fetchScreenScraper(rom, crc32 = '') {
         document.getElementById('ss-rom-title').innerText = rom;
         
-        // Show loading, hide others
-        document.getElementById('ss-loading').classList.remove('hidden');
+        // Reset modal content state
         document.getElementById('ss-error').classList.add('hidden');
         document.getElementById('ss-content').classList.add('hidden');
+        document.getElementById('ss-modal').classList.add('hidden');
         
-        document.getElementById('ss-modal').classList.remove('hidden');
-        document.body.classList.add('overflow-hidden');
+        // Show the cool 80s global loading modal
+        if (typeof window.showRetroLoading === 'function') {
+            window.showRetroLoading('Fetching Data...');
+        }
         
         // Use systemId=4 (SNES) by default, or pass via config
         const sysId = window.activeSystemId || systemIdConfig;
@@ -127,7 +129,11 @@
                 return response.json();
             })
             .then(data => {
-                document.getElementById('ss-loading').classList.add('hidden');
+                if (typeof window.hideRetroLoading === 'function') {
+                    window.hideRetroLoading();
+                }
+                document.getElementById('ss-modal').classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
                 document.getElementById('ss-content').classList.remove('hidden');
                 
                 // data might be GameSearchResultsData
@@ -208,7 +214,11 @@
                 document.getElementById('ss-history').innerText = synopsisText;
             })
             .catch(error => {
-                document.getElementById('ss-loading').classList.add('hidden');
+                if (typeof window.hideRetroLoading === 'function') {
+                    window.hideRetroLoading();
+                }
+                document.getElementById('ss-modal').classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
                 document.getElementById('ss-error').classList.remove('hidden');
                 document.getElementById('ss-error-message').innerText = error.message;
             });

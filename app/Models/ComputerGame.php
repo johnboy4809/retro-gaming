@@ -43,7 +43,9 @@ class ComputerGame extends Model
     {
         $baseSize = (int) ($this->size_bytes ?? 0);
         $chdSize = $this->chd ? (int) $this->chd->size_bytes : 0;
+        // Add 5MB (5242880 bytes) for metadata/images overhead
+        $metaOverhead = 5242880; 
         
-        return $baseSize + $chdSize + 5242880;
+        return $baseSize + $chdSize + $metaOverhead;
     }
 }

@@ -29,13 +29,16 @@
             width: 100%;
             height: 500px;
             max-width: 1000px;
+            background-image: linear-gradient(rgba(23, 11, 59, 0.5), rgba(23, 11, 59, 0.5)), url('waiting-modal-bg.jpg');
+            background-size: cover;
+            background-position: center;
             /* Radial background mimics the low neon sun melting into the night sky */
-            background: radial-gradient(circle at 50% 70%, #ff00a0 0%, #170b3b 50%, #0c011a 90%);
+            /* background: radial-gradient(circle at 50% 70%, #ff00a0 0%, #170b3b 50%, #0c011a 90%); */
             display: grid;
             place-items: center;
             overflow: hidden;
             border: 3px solid #00f3ff;
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.3), inset 0 0 30px rgba(0, 243, 255, 0.2);
+            /* box-shadow: 0 0 30px rgba(0, 243, 255, 0.3), inset 0 0 30px rgba(0, 243, 255, 0.2); */
             border-radius: 8px;
         }
 
@@ -44,7 +47,7 @@
             position: absolute;
             bottom: 0;
             width: 100%;
-            height: 45%;
+            height: 30%;
             /* Uses linear-gradients to construct the neon cyan grid mesh */
             background-image:
                 linear-gradient(rgba(0, 243, 255, 0.4) 1px, transparent 1px),
@@ -76,40 +79,12 @@
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
             text-transform: uppercase;
-            font-size: 5.5rem;
+            font-size: 3rem;
             letter-spacing: 6px;
             margin: 0;
             padding: 10px;
             text-align: center;
-
-            /* Chrome gradient mapping sampled directly from the reference video palette */
-            background: linear-gradient(to bottom,
-                    #170b3b 0%,
-                    /* Dark sky purple at the top tip */
-                    #3f1b77 35%,
-                    /* Mid-sky purple */
-                    #ff00a0 47%,
-                    /* Magenta sun glare edge */
-                    #ffffff 49%,
-                    /* White hot horizon reflection flash */
-                    #051c24 51%,
-                    /* Ground shadow baseline split */
-                    #00f3ff 56%,
-                    /* Electric cyan car trail highlight */
-                    #008fa3 80%,
-                    /* Deep trail turquoise */
-                    #120224 100%
-                    /* Deep bottom ambient shadow */
-                );
-
-            /* Restricts the gradient background solely to the lettering geometry */
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-
-            /* Combined double neon glow: sharp pink edge pop and a soft teal atmospheric blur */
-            filter:
-                drop-shadow(0 0 2px #ff00a0) drop-shadow(0 0 20px rgba(0, 243, 255, 0.55));
+            color: rgb(255, 255, 255);
         }
 
         /* Responsive scaling so text fits nicely on smaller viewports */
@@ -133,9 +108,32 @@
         <div class="grid-floor"></div>
 
         <!-- Bulky chrome title text -->
-        <h1 class="synth-chrome-text">RETRO DRIVE</h1>
+        <h1 class="synth-chrome-text">Loading...</h1>
     </div>
 
 </body>
 
 </html>
+
+<!-- /* Chrome gradient mapping sampled directly from the reference video palette */
+            background: linear-gradient(to bottom,
+                    #170b3b 0%,
+                    /* Dark sky purple at the top tip */
+                    #00f3ff 40%,
+                    /* Magenta sun glare edge */
+                    #ffffff 49%,
+                    /* White hot horizon reflection flash */
+                    #051c24 51%,
+                    /* Deep trail turquoise */
+                    #ff00a0 90%
+                    /* Deep bottom ambient shadow */
+                );
+
+            /* Restricts the gradient background solely to the lettering geometry */
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            /* Combined double neon glow: sharp pink edge pop and a soft teal atmospheric blur */
+            filter:
+                drop-shadow(0 0 2px #ff00a0) drop-shadow(0 0 20px rgba(0, 243, 255, 0.55)); -->

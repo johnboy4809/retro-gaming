@@ -178,3 +178,32 @@ body.login-body {
         transform: translateX(-50%);
     }
 }
+
+/* --- Retro Loading Modal --- */
+#retro-loading-modal {
+    .grid-floor {
+        background-image:
+            linear-gradient(rgba(0, 243, 255, 0.4) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 243, 255, 0.4) 1px, transparent 1px);
+        background-size: 50px 50px;
+        background-position: center bottom;
+        transform: perspective(180px) rotateX(65deg);
+        transform-origin: top center;
+        animation: drive-forward 1.5s linear infinite;
+    }
+
+    .retro-drive-container {
+        background-image: linear-gradient(rgba(23, 11, 59, 0.5), rgba(23, 11, 59, 0.5)), url('../images/waiting-modal-bg.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+}
+
+@keyframes drive-forward {
+    from {
+        background-position: center 0px;
+    }
+    to {
+        background-position: center 50px;
+    }
+}
